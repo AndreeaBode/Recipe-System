@@ -1,0 +1,12 @@
+.recipe-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Grid cu coloane de lățime minimă de 200px și extensibile */
+  gap: 10px; /* Spațiere între elemente */
+  max-width: 800.8px; /* Limită maximă de lățime pentru lista */
+  max-height: 263.8px; /* Înălțimea dorită pentru lista */
+  overflow-x: auto; /* Permiterea derulării orizontale dacă lista depășește lățimea maximă */
+}
+

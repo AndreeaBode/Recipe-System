@@ -1,0 +1,33 @@
+<form (ngSubmit)="submitRecipe()">
+  <div>
+    <label for="title">Titlu:</label>
+    <input type="text" id="title" [(ngModel)]="recipe.title" name="title" required>
+  </div>
+  <div>
+    <label for="image">Imagine:</label>
+    <input type="text" id="image" [(ngModel)]="recipe.image" name="image" required>
+  </div>
+  
+  <div>
+    <label for="ingredient">Ingrediente:</label>
+    <input type="text" [(ngModel)]="newIngredient" name="newIngredient">
+    <button type="button" (click)="addFieldIngredient()">Adaugă ingredient</button>
+    <div *ngFor="let ingredient of recipe.ingredients; let i = index">
+        <label for="ingredient{{i}}">Ingredient {{i + 1}}:</label>
+        <input type="text" [(ngModel)]="recipe.ingredients[i].ingredient" name="ingredient{{i}}" required>
+    </div>
+</div>
+
+<div>
+    <label for="instruction">Pași:</label>
+    <input type="text" [(ngModel)]="newInstruction" name="newInstruction">
+    <button type="button" (click)="addFieldStep()">Adaugă pas</button>
+    <div *ngFor="let instruction of recipe.instructions; let i = index">
+        <label for="instruction{{i}}">Pas {{i + 1}}:</label>
+        <input type="text" [(ngModel)]="recipe.instructions[i].instruction" name="instruction{{i}}" required>
+    </div>
+</div>
+
+
+  <button type="submit">Adaugă rețetă</button>
+</form>
