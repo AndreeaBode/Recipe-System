@@ -9,19 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import sd.dtos.AddedRecipeDTO;
 import sd.dtos.ExtractedDTO;
 import sd.dtos.ExtractedRecipeDTO;
 import sd.dtos.builders.ExtractedRecipeBuilder;
-import sd.entities.ExtractedRecipe;
-import sd.entities.Ingredient;
-import sd.entities.Recipe;
-import sd.entities.Step;
-import sd.repositories.ExtractedRecipeRepository;
-import sd.repositories.IngredientRepository;
-import sd.repositories.RecipeRepository;
-import sd.repositories.StepRepository;
+import sd.entities.*;
+import sd.repositories.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,6 +30,9 @@ public class RecipeService {
 
     @Autowired
     private ExtractedRecipeRepository extractedRecipeRepository;
+
+    @Autowired
+    private AddedRecipeRepository addedRecipeRepository;
 
     @Autowired
     private IngredientRepository ingredientRepository;
@@ -298,18 +297,17 @@ public class RecipeService {
         }
     }
 
-    public ExtractedDTO addRecipe(ExtractedDTO recipeDTO) {
+    public AddedRecipeDTO addRecipe(AddedRecipeDTO recipeDTO) {
         try {
-            // Extragem informațiile din obiectul RecipeDto
+
             String title = recipeDTO.getTitle();
             String image = recipeDTO.getImage();
-            List<Ingredient> ingredients = recipeDTO.getIngredients();
-            List<Step> instructions = recipeDTO.getInstructions();
+            List<AddedIngredient> ingredients = recipeDTO.getIngredients();
+            List<AddedStep> instructions = recipeDTO.getInstructions();
 
-            // Salvăm rețeta extrasă în baza de date și obținem rețeta salvată
+
             saveRecipe(title, image, ingredients, instructions);
 
-            // Returnăm obiectul ExtractedDTO actualizat
             return recipeDTO;
         } catch (Exception e) {
             e.printStackTrace();
@@ -317,27 +315,56 @@ public class RecipeService {
         }
     }
 
-    private void saveRecipe(String title, String image, List<Ingredient> ingredients, List<Step> instructions) {
+    private void saveRecipe(String title, String image, List<AddedIngredient> ing, List<AddedStep> instructions) {
         try {
+            AddedRecipe addedRecipe = new AddedRecipe();
+            addedRecipe.setTitle(title);
+            addedRecipe.setImage(image);
+
+            List<AddedIngredient> ingredients = ing;
+
+            if (!ingredients.isEmpty()) {
+                // Obținem ultimul element din listă
+                AddedIngredient ultimulElement = ingredients.get(ingredients.size() - 1);
+
+                // Ștergem ultimul element din listă
+                ingredients.remove(ingredients.size() - 1);
+
+                // Adăugăm ultimul element la începutul listei
+                ingredients.add(0, ultimulElement);
+                System.out.println("Ing" + "  "+ingredients.toString());
+            } else {
+                System.out.println("Lista de ingrediente este goală.");
+            }
+            List<AddedStep> step = instructions;
+
+            if (!step.isEmpty()) {
+                // Obținem ultimul element din listă
+                AddedStep ultimulElement = step.get(step.size() - 1);
+
+                // Ștergem ultimul element din listă
+                step.remove(step.size() - 1);
+
+                // Adăugăm ultimul element la începutul listei
+                step.add(0, ultimulElement);
+                System.out.println("Ing" + "  "+step.toString());
+            } else {
+                System.out.println("Lista de ingrediente este goală.");
+            }
+            for (AddedIngredient ingredient : ingredients) {
+                ingredient.setRecipe(addedRecipe);
+            }
+
+            for (AddedStep instruction : step) {
+                instruction.setRecipe(addedRecipe);
+            }
+
+            // Adăugăm lista de ingrediente și instrucțiuni la rețetă
+            addedRecipe.setIngredients(ingredients);
+            addedRecipe.setSteps(step);
+
             // Salvăm rețeta în baza de date
-            ExtractedRecipe extractedRecipe = new ExtractedRecipe();
-            extractedRecipe.setTitle(title);
-            extractedRecipe.setImage(image);
-
-            // Iterăm prin lista de ingrediente și instrucțiuni și le asociem rețetei
-            for (int i = ingredients.size() - 1; i >= 0; i--) {
-                Ingredient ingredient = ingredients.get(i);
-                ingredient.setRecipe(extractedRecipe);
-                extractedRecipe.getIngredients().add(0, ingredient);
-            }
-            for (int i = instructions.size() - 1; i >= 0; i--) {
-                Step instruction = instructions.get(i);
-                instruction.setRecipe(extractedRecipe);
-                extractedRecipe.getSteps().add(0, instruction);
-            }
-
-            // Salvăm rețeta și asociem ingredientele și instrucțiunile
-            extractedRecipeRepository.save(extractedRecipe);
+            addedRecipeRepository.save(addedRecipe);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error saving recipe: " + e.getMessage());
@@ -345,6 +372,17 @@ public class RecipeService {
     }
 
 
+    public AddedRecipeDTO getAddedDetailRecipe(int id) {
+        Optional<AddedRecipe> addedRecipeOptional = addedRecipeRepository.findById(id);
+        if (addedRecipeOptional.isPresent()) {
+            AddedRecipe addedRecipe = addedRecipeOptional.get();
+            addedRecipe.getIngredients().size();
+            addedRecipe.getSteps().size();
+            return new AddedRecipeDTO(addedRecipe);
+        } else {
+            throw new RuntimeException("Recipe not found with id: " + id);
+        }
+    }
 
 }
 

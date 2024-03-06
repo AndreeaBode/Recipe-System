@@ -11,8 +11,10 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { AdvancedDetailComponent } from './advanced-search/advanced-detail/advanced-detail.component';
 import { RecipeDishgenComponent } from './recipe-dishgen/recipe-dishgen.component';
-import { DishgenDetailComponent } from './recipe-dishgen/dishgen-detail/dishgen-detail.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
+import { AddedRecipeDetailComponent } from './add-recipe/added-recipe-detail/added-recipe-detail.component';
+import { DetailsComponent } from './details/details.component';
+import { FavoriteComponent } from './favorite/favorite.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
@@ -26,8 +28,14 @@ const routes: Routes = [
   { path: 'advanced-search', component: AdvancedSearchComponent },
   { path: 'advanced-detail/:id', component: AdvancedDetailComponent },
   { path: 'dishgen', component: RecipeDishgenComponent },
-  { path: 'dishgen-detail/:id', component: DishgenDetailComponent },
+  { path: 'favorite', component: FavoriteComponent },
   { path: 'add', component: AddRecipeComponent },
+  { path: 'add-recipe-detail', component: AddedRecipeDetailComponent },
+  {
+    path: 'details/:id/:sourcePage',
+    component: DetailsComponent
+  }
+  
 
 ];
 @NgModule({

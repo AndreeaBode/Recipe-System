@@ -16,8 +16,13 @@
     <li *ngFor="let recipe of searchResult">
       <a (click)="showRecipeDetails(recipe.id)" class="recipe-item">
         <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
+      </a> 
+      <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
+        <i class="fas fa-heart"></i>
+      </span>
+      
         <h3>{{ recipe.title }}</h3>
-      </a>
+      
     </li>
   </ul>
 </div>
@@ -29,8 +34,11 @@
     <li *ngFor="let recipe of randomRecipes">
       <a (click)="showRecipeDetails(recipe.id)" class="recipe-item">
         <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
-        <h3>{{ recipe.title }}</h3>
-      </a>
+       </a>  
+       <h3>{{ recipe.title }}</h3>
+       <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
+        <i class="fas fa-heart"></i>
+      </span>
     </li>
   </ul>
 </div>

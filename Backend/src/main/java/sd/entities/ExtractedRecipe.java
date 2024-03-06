@@ -14,7 +14,7 @@ public class ExtractedRecipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String title;
 
     @Column(nullable = false)

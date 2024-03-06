@@ -25,11 +25,12 @@ import { SearchIngredientsComponent } from './search-ingredients/search-ingredie
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { AdvancedDetailComponent } from './advanced-search/advanced-detail/advanced-detail.component';
-import { RecipeDishgenComponent } from './recipe-dishgen/recipe-dishgen.component';
-import { DishgenDetailComponent } from './recipe-dishgen/dishgen-detail/dishgen-detail.component';
-import { AddRecipeComponent } from './add-recipe/add-recipe.component';
+import { RecipeDishgenComponent } from './recipe-dishgen/recipe-dishgen.component';import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { ToastrModule } from 'ngx-toastr';
-
+import { AddedRecipeDetailComponent } from './add-recipe/added-recipe-detail/added-recipe-detail.component';
+import { DetailsComponent } from './details/details.component';
+import { DropdownMenuComponent } from './dropdown-menu/dropdown-menu.component';
+import { FavoriteComponent } from './favorite/favorite.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -67,8 +68,11 @@ import { ToastrModule } from 'ngx-toastr';
     AdvancedSearchComponent,
     AdvancedDetailComponent,
     RecipeDishgenComponent,
-    DishgenDetailComponent,
     AddRecipeComponent,
+    AddedRecipeDetailComponent,
+    DetailsComponent,
+    DropdownMenuComponent,
+    FavoriteComponent,
 
   ],
   providers: [

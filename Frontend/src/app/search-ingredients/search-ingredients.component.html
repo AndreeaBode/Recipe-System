@@ -15,8 +15,11 @@
       <li *ngFor="let recipe of recipes">
         <a (click)="showRecipeDetails(recipe.id)" class="recipe-item">
         <img [src]="recipe.image" alt="{{ recipe.title }}" >
-        <h3>{{ recipe.title }}</h3>
-        </a>
+       </a> 
+       <h3>{{ recipe.title }}</h3>
+       <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
+        <i class="fas fa-heart"></i>
+      </span>
         <p>Used Ingredient Count: {{ recipe.usedIngredientCount }}</p>
         <p>Missed Ingredient Count: {{ recipe.missedIngredientCount }}</p>
       </li>

@@ -2,7 +2,7 @@
 <div *ngFor="let recipe of recipes">
   <div>
     <a (click)="showRecipeDetails(recipe.id)" class="recipe-item">
-    <img [src]="recipe.image" alt="Recipe Image" width="300">
+      <img [src]="recipe.image" alt="Recipe Image" width="300">
     </a>
     <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
       <i class="fas fa-heart"></i>
@@ -10,6 +10,3 @@
     <h3>{{ recipe.title }}</h3>
   </div>
 </div>
-
-
-

@@ -50,12 +50,5 @@ public class Step {
         this.recipe = recipe;
     }
 
-    @Override
-    public String toString() {
-        return "Step{" +
-                "id=" + id +
-                ", instruction='" + instruction + '\'' +
-                ", recipe=" + recipe +
-                '}';
-    }
+
 }

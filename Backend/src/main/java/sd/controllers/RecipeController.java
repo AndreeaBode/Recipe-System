@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sd.dtos.AddedRecipeDTO;
 import sd.dtos.ExtractedDTO;
 import sd.dtos.ExtractedRecipeDTO;
 import sd.services.RecipeService;
@@ -96,16 +97,22 @@ public class RecipeController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ExtractedDTO> addRecipe(@RequestBody String payload) {
+    public ResponseEntity<AddedRecipeDTO> addRecipe(@RequestBody String payload) {
         try {
-            ExtractedDTO recipeDTO = objectMapper.readValue(payload, ExtractedDTO.class);
+            AddedRecipeDTO recipeDTO = objectMapper.readValue(payload, AddedRecipeDTO.class);
             System.out.println("Received Recipe DTO: " + recipeDTO);
-            ExtractedDTO addedRecipeDTO = recipeService.addRecipe(recipeDTO);
+            AddedRecipeDTO addedRecipeDTO = recipeService.addRecipe(recipeDTO);
             return ResponseEntity.ok(addedRecipeDTO);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/added-detail/{id}")
+    public ResponseEntity<AddedRecipeDTO> getAddedDetailRecipe(@PathVariable("id") int id) {
+        AddedRecipeDTO addedRecipeDTO = recipeService.getAddedDetailRecipe(id);
+        return new ResponseEntity<>(addedRecipeDTO,HttpStatus.OK);
     }
 }
 

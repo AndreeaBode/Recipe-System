@@ -3,21 +3,28 @@
     <a routerLink="/home-page" class="nav-link">Energy System</a>
   </div>
   <div class="navbar-right">
-    <a routerLink="/recipes" class="nav-link">Recipes</a>
+   <!-- <a routerLink="/recipes" class="nav-link">Recipes</a> -->
     <a routerLink="/extract-recipe" class="nav-link">Extract Recipe</a>
-    <a routerLink="/search-ingredients" class="nav-link">Search Ingredients</a>
+   <!-- <a routerLink="/search-ingredients" class="nav-link">Search Ingredients</a> -->
     <a routerLink="/menu-items" class="nav-link">Menu Items</a>
-    <a routerLink="/advanced-search" class="nav-link">Advanced Search</a>
-    <a routerLink="/dishgen" class="nav-link">Dishgen</a>
+   <!-- <a routerLink="/advanced-search" class="nav-link">Advanced Search</a> -->
+   <!-- <a routerLink="/dishgen" class="nav-link">Dishgen</a> -->
     <a routerLink="/add" class="nav-link">Add</a>
+    <a routerLink="/favorite" class="nav-link">Favorite</a>
+   <!-- <a routerLink="/add-recipe-detail" class="nav-link">Added</a> -->
+    
+    <app-dropdown-menu></app-dropdown-menu>
+    
     <ng-container *ngIf="authService.isLoggedIn(); else loggedOutTemplate">
       <button (click)="onLogout()" class="nav-link btn-style">Logout</button>
     </ng-container>
     <ng-template #loggedOutTemplate>
       <a routerLink="/login" class="nav-link">Login</a>
     </ng-template>
+    
   </div>
 </div>
+
 <router-outlet></router-outlet>
 <app-messages></app-messages>
 

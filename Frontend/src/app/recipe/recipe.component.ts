@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import { Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../auth.service';
+import { LikeService } from '../services/like.service';
 
 @Component({
   selector: 'app-recipe',
@@ -15,12 +17,22 @@ export class RecipeComponent {
   extractedRecipe: any;
   recipeDetails: any = {};
   
-  constructor(private recipeService: RecipeService, private router: Router) {}
+  
+  constructor(private recipeService: RecipeService,    
+    private authService: AuthService,
+    private router: Router,
+    private likeService: LikeService) {}
 
   searchFood(query: string): void {
     this.recipeService.searchFood(query).subscribe(
       (response: any) => {
         this.searchResult = response.results; 
+        this.searchResult.forEach(recipe => {
+          console.log("C", recipe);
+          if (recipe) {
+              this.checkIfLiked(recipe);
+          }
+      });
         console.log("Search results:", this.searchResult); 
       },
       (error: HttpErrorResponse) => {
@@ -43,7 +55,52 @@ export class RecipeComponent {
     );
   }
 
-  showRecipeDetails(recipeId: number) {
+  showRecipeDetails(recipeId: number): void {
     this.router.navigate(['/recipe-detail', recipeId]);
+    
   }
+
+  toggleLike(recipe: any): void {
+    const userId = this.authService.userId();
+    if (!userId) {
+      return;
+    }
+
+    const recipeId = recipe.id;
+    const name = "spoonacular";
+    console.log(name);
+    recipe.isLoved = !recipe.isLoved;
+
+    console.log("Lo", recipe.isLoved);
+    this.likeService.toggleLike(userId, recipeId, recipe.isLoved, name).subscribe(
+      response => {
+        console.log('Succes');
+      },
+      (error) =>{
+        console.log('Esec', error);
+      }
+    )
+  }
+
+
+  checkIfLiked(recipe: any): void {
+    console.log("Recipe object:", recipe); // Log the recipe object
+    const userId = this.authService.userId();
+    const recipeId = recipe.id;
+    const name = "spoonacular";
+    console.log("name", name);
+
+ 
+    console.log("U", userId);
+    console.log("R",  recipe.id);
+    this.recipeService.checkIfLiked(userId, recipeId).subscribe(
+      response => {
+        recipe.isLoved = response; // Setează proprietatea isLoved direct în obiectul recipe
+      },
+      error => {
+        console.error('Error checking if liked:', error);
+      }
+    );
+  }
+
 }

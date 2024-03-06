@@ -47,11 +47,5 @@ public class ExtractedRecipeDTO {
         this.image = image;
     }
 
-    @Override
-    public String toString() {
-        return "ExtractedRecipeDTO{" +
-                "title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                '}';
-    }
+
 }

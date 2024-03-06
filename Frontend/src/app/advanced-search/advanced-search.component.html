@@ -71,6 +71,9 @@
       <a (click)="showRecipeDetails(recipe.id)" class="recipe-item">
       <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
       </a>
+      <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
+        <i class="fas fa-heart"></i>
+      </span>
       <ul>
       </ul>
     </div>

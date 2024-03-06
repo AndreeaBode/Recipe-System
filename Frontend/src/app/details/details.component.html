@@ -1,6 +1,11 @@
 <div *ngIf="recipe">
     <h2>{{ recipe.title }}</h2>
+    
     <img [src]="recipe.image" alt="Recipe Image" width="300" height="300">
+    <span class="heart" [class.full]="isLoved" (click)="toggleLike(recipe)">
+        <i class="fas fa-heart"></i> 
+      </span>
+      
     <h3>Ingredients</h3>
     <ul>
         <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient.ingredient }}</li>
@@ -9,4 +14,11 @@
     <ol>
         <li *ngFor="let instruction of recipe.instructions">{{ instruction.instruction }}</li>
     </ol>
+    
+    <div *ngIf="name === 'spoonacular'">
+        <p><b>Ready in minutes:</b> {{ recipe.readyInMinutes }}</p>
+        <p><b>Servings:</b> {{ recipe.servings }}</p>
+        <p><b>Summary:</b> {{ recipe.summary }}</p>
+    </div>
+      
 </div>

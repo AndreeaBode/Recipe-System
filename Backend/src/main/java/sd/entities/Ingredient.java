@@ -50,13 +50,6 @@ public class Ingredient {
         this.ingredient = ingredient;
     }
 
-    @Override
-    public String toString() {
-        return "Ingredient{" +
-                "id=" + id +
-                ", ingredient='" + ingredient + '\'' +
-                ", recipe=" + recipe +
-                '}';
-    }
+
 }
 
