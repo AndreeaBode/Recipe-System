@@ -31,6 +31,9 @@ import { AddedRecipeDetailComponent } from './add-recipe/added-recipe-detail/add
 import { DetailsComponent } from './details/details.component';
 import { DropdownMenuComponent } from './dropdown-menu/dropdown-menu.component';
 import { FavoriteComponent } from './favorite/favorite.component';
+import { RecipeUnderReviewComponent } from './recipe-under-review/recipe-under-review.component';
+import { NavbarComponent } from './navbar/navbar.component';
+
 @NgModule({
   imports: [
     FormsModule,
@@ -73,6 +76,8 @@ import { FavoriteComponent } from './favorite/favorite.component';
     DetailsComponent,
     DropdownMenuComponent,
     FavoriteComponent,
+    RecipeUnderReviewComponent,
+    NavbarComponent,
 
   ],
   providers: [

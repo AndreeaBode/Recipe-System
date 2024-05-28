@@ -1,13 +1,99 @@
 <div class="main">
-    <div class="content">
-      <h1>Welcome & <br><span>Energy</span> <br>Management System</h1>
-      <p class="par"> Energy management is the proactive and systematic monitoring,<br>
-         control and optimization of an organization's energy consumption<br> 
-         to conserve use and decrease energy costs. Energy management<br> 
-         includes minor actions such as monitoring 
-          monthly energy bills <br>
-          and upgrading to energy-saving lightbulbs.</p>
+  <div class="background-image">
+    <img src="https://recipebook.io/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fslide1.52986a5a.jpeg&w=1200&q=75"
+      alt="Delicioasă rețetă">
+  </div>
 
+  <div class="content">
+  </div>
+</div>
+
+
+<div class="recipes-menu">
+  <div *ngFor="let recipe of recipes" class="recipe-card">
+    <a routerLink="/recipe-detail/{{recipe.id}}">
+      <img [src]="recipe.image" alt="Recipe Image" class="recipe-image" />
+      <span class="image-title">{{ recipe.title }}</span>
+    </a>
+  </div>
+  </div>
+
+
+<div class="main">
+  <div class="content">
+    <div *ngIf="showNewsletterForm" class="email">
+      <form (submit)="subscribeEmail()">
+        <input type="email" name="email" placeholder="Your email" [(ngModel)]="email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div *ngIf="showContactForm" class="contact">
+      <form (submit)="sendContactMessage()">
+        <input type="text" name="name" placeholder="Your name" [(ngModel)]="contactName" required>
+        <input type="email" name="email" placeholder="Your email" [(ngModel)]="contactEmail" required>
+        <textarea name="message" placeholder="Your message" [(ngModel)]="contactMessage" required></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  <div class="container">
+    <div class="logo">
+      <img src="./assets/logo.png" alt="Logo Delicii">
+      <p>Follow us</p>
+      <div class="social-icons">
+        <a href="link_facebook"><img src="./assets/facebook.png" alt="Facebook"></a>
+        <a href="link_instagram"><img src="./assets/instagram.png" alt="Instagram"></a>
+        <a href="link_tiktok"><img src="./assets/tiktok.jpg" alt="TikTok"></a>
+        <a href="link_twitter"><img src="./assets/twitter.avif" alt="Twitter"></a>
+      </div>
+    </div>
+  
+    <div class="tabs">
+      <div class="column">
+
+        <div>
+          <a routerLink="/added" class="nav-link">{{ capitalizeFirstLetter('added') }}Recipes</a>
+        </div>
+        <div>
+          <a routerLink="/dishgen" class="nav-link">{{ capitalizeFirstLetter('dishgen') }}Recipes</a>
+        </div>
+        <div>
+          <a routerLink="/favorite" class="nav-link">{{ capitalizeFirstLetter('favorite') }}</a>
+        </div>
+      </div>
+      <div class="column">
+        <div>
+          <a routerLink="/search-ingredients" class="nav-link">{{ capitalizeFirstLetter('searchByIngredient') }}</a>
+        </div>
+        <div>
+          <a routerLink="/search-nutrition" class="nav-link">{{ capitalizeFirstLetter('searchWithNutritionsValues') }}</a>
+        </div>
+
+        <div>
+          <a routerLink="/newsletter" class="nav-link">{{ capitalizeFirstLetter('newsletter') }}</a>
+        </div>
+        <div>
+          <a routerLink="/contact" class="nav-link">{{ capitalizeFirstLetter('contact') }}</a>
+        </div>
+      </div>
+      <div class="column">
+        <div>
+          <a class="nav-link"><i class="fas fa-map-marker-alt"></i>  Cluj-Napoca, Romania</a>
+        </div>
+        <div>
+          <a class="nav-link"><i class="fas fa-phone-alt"></i>  +40762529150</a>
+        </div>
+        <div>
+          <a class="nav-link"><i class="fas fa-envelope"></i>   contact@delicii.com</a>
+        </div>
+      </div>
+
+    </div>
     </div>
   </div>
   
+
+<div>
+  <button (click)="exportData()">Exportă date</button>
+  <p>{{ exportMessage }}</p>
+</div>

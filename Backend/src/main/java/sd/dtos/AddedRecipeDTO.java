@@ -8,6 +8,7 @@ public class AddedRecipeDTO {
     private int id;
     private String title;
     private String image;
+
     private List<AddedIngredient> ingredients;
     private List<AddedStep> instructions;
 

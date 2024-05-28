@@ -1,10 +1,83 @@
+.background {
+  padding: 40px;
+}
 
-.heart.full {
-    color: red;
+.extract-recipe {
+  .extract-container {
+    margin-bottom: 20px;
+
+    h1 {
+      margin-bottom: 10px;
+      text-align: center;
+      padding-bottom: 30px;
+    }
+
+    input[type="text"] {
+      width: 50%;
+      margin-left: 25%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid rgb(31, 30, 30);
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+
+    .button {
+      margin-left: 45%;
+      margin-top: 20px;
+      padding: 12px 24px;
+      background: repeating-linear-gradient( to left,#8d8d8d,#6d66db);
+      border: none;
+      border-radius: 24px;
+      color: #fff;
+
+      &:hover,
+      &:focus {
+        background: linear-gradient(#40E0D0, #02a0d4);
+        outline: none;
+      }
+    }
   }
-  
-  .heart {
-    color: black;
-    transition: color 0.3s ease; 
+
+  .recipe {
+    margin-bottom: 20px;
+
+   h1,h2 {
+      margin-top: 50px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block; // Asigură că imaginea ocupă întreaga lățime disponibilă
+      margin: 0 auto; // Centrează imaginea în container
+      border-radius: 5px; // Adaugă o mică rotunjire la colțuri
+    }
+
+    ul, ol {
+      list-style: none;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ingredients-list {
+      margin-bottom: 5px;
+      padding-left:43.5%;
+    }
+
+    .instructions-list {
+      margin-bottom: 5px;
+      padding-left:20%;
+    }
+
+    // Stilizare pentru listele de ingrediente și instrucțiuni
+    ul, ol {
+      text-align: left; // Aliniază textul la stânga în listă
+      margin-left: 20px; // Adaugă un spațiu la stânga listei
+    }
   }
-  
+ 
+}

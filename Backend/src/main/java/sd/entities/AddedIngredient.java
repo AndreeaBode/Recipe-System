@@ -4,34 +4,34 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "added_ ingredients")
+@Table(name = "added_ingredients")
 public class AddedIngredient {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-        @Column(nullable = false)
-        private String ingredient;
+    @Column(nullable = false)
+    private String ingredient;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "recipe_id", nullable = false)
-        @JsonIgnore
-        private AddedRecipe recipe;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_id", nullable = false)
+    @JsonIgnore
+    private AddedRecipe recipe;
 
-        public AddedIngredient(String ingredient) {
-            this.ingredient = ingredient;
-        }
+    public AddedIngredient(String ingredient) {
+        this.ingredient = ingredient;
+    }
 
-        public AddedIngredient() {
-        }
+    public AddedIngredient() {
+    }
 
-        public int getId() {
-            return id;
-        }
+    public int getId() {
+        return id;
+    }
 
-        public void setId(int id) {
-            this.id = id;
-        }
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
     public AddedRecipe getRecipe() {
@@ -43,13 +43,12 @@ public class AddedIngredient {
     }
 
     public String getIngredient() {
-            return ingredient;
-        }
-
-        public void setIngredient(String ingredient) {
-            this.ingredient = ingredient;
-        }
-
-
+        return ingredient;
     }
 
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
+    }
+
+
+}

@@ -14,8 +14,8 @@ public class AdvancedRecipeService {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    private final String spoonacularApiKey = "d79ab01d2eff47d081feed07a650ff00";
-    //private final String spoonacularApiKey = "da3a95ad9e794dc3b5d43cf1f0f8cf60";
+    //private final String spoonacularApiKey = "d79ab01d2eff47d081feed07a650ff00";
+    private final String spoonacularApiKey = "da3a95ad9e794dc3b5d43cf1f0f8cf60";
     //private final String spoonacularApiKey = "e0f0174758e74ee18fe3567c329272b5";
 
     private final String searchApiUrl = "https://api.spoonacular.com/recipes/complexSearch";

@@ -13,11 +13,10 @@ public class AddedStep {
         @Column(nullable = false)
         private String instruction;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "recipe_id", nullable = false)
-        @JsonIgnore
-        private AddedRecipe recipe;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_id", nullable = false)
+    @JsonIgnore
+    private AddedRecipe recipe;
         public AddedStep(String instruction) {
             this.instruction = instruction;
         }

@@ -79,8 +79,7 @@ public class ExtractedDTO {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", image='" + image + '\'' +
-                ", ingredients=" + ingredients +
-                ", instructions=" + instructions +
                 '}';
     }
+
 }

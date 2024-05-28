@@ -9,10 +9,13 @@ import { RecipeService } from '../services/recipe.service';
   templateUrl: './favorite.component.html',
   styleUrls: ['./favorite.component.scss']
 })
-export class FavoriteComponent   implements OnInit {
+export class FavoriteComponent implements OnInit {
   recipes: any[] = [];
+  currentRecipes: any[] = [];
+  pageSize: number = 6;
+  currentPage: number = 0;
 
-  constructor(private recipeService: RecipeService, private router : Router, private authService: AuthService,private likeService: LikeService) { }
+  constructor(private recipeService: RecipeService, private router: Router, private authService: AuthService, private likeService: LikeService) { }
 
   ngOnInit(): void {
     this.loadFavoriteRecipes();
@@ -20,29 +23,22 @@ export class FavoriteComponent   implements OnInit {
 
   loadFavoriteRecipes() {
     const userId = this.authService.userId();
-    console.log("id", userId);
     if (userId) {
-      console.log("aa")
       this.recipeService.getFavoriteRecipes(userId).subscribe(
         (data: any[]) => {
-          this.recipes = data;
-          console.log("RRRR5", this.recipes);
-          this.recipes.forEach(recipe => {
-            console.log("C", recipe);
-            if (recipe) {
-                this.checkIfLiked(recipe);
-            }
-        });
-        
-          console.log("RRRR", data);
+          this.recipes = data.map(recipe => {
+            recipe.isLoved = true;
+            return recipe;
+          });
+          this.updateDisplayedRecipes();
         },
-        (error: any) => { 
+        (error: any) => {
           console.log('Error fetching favorite recipes:', error);
         }
       );
     }
   }
-  
+
   showRecipeDetails(id: number): void {
     if (id) {
       this.router.navigate(['/details', id, 'spoonacular']);
@@ -50,57 +46,36 @@ export class FavoriteComponent   implements OnInit {
       console.error('ID-ul rețetei este nedefinit.');
     }
   }
-  
 
   toggleLike(recipe: any): void {
-
-    console.log("RR3", recipe);
     const userId = this.authService.userId();
     if (!userId) {
-     
       return;
     }
 
     const recipeId = recipe.recipeId;
     const name = recipe.name;
-    console.log(name);
     recipe.isLoved = !recipe.isLoved;
+    console.log("recipe.isLoved", recipe.isLoved);
 
-    console.log("ue", userId);
-    console.log("re", recipeId);
-    console.log("ne", name);
-    console.log("Lo", recipe.isLoved);
-    this.likeService.toggleLike(userId, recipeId,recipe.isLoved, name).subscribe(
+    this.likeService.toggleLike(userId, recipeId, recipe.isLoved, name).subscribe(
       response => {
         console.log('Succes');
-       // window.location.reload();
       },
-      (error) =>{
+      (error) => {
         console.log('Esec', error);
       }
     )
   }
 
-
-
-  checkIfLiked(recipe: any): void {
-    console.log("Recipe object:", recipe); // Log the recipe object
-    const userId = this.authService.userId();
-    const recipeId = recipe.recipeId;
-    const name = recipe.name;
-    console.log("name", name);
-
- 
-    console.log("U", userId);
-    console.log("R",  recipe.recipeId);
-    this.recipeService.checkIfLiked(userId, recipeId).subscribe(
-      response => {
-        recipe.isLoved = response; 
-      },
-      error => {
-        console.error('Error checking if liked:', error);
-      }
-    );
+  onPageChange(event: any): void {
+    this.currentPage = event.pageIndex;
+    this.updateDisplayedRecipes();
   }
-  
+
+  updateDisplayedRecipes(): void {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.currentRecipes = this.recipes.slice(startIndex, endIndex);
+  }
 }

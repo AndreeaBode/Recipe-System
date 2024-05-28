@@ -25,7 +25,22 @@ public class AddedRecipe {
         @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
         private List<AddedStep> steps = new ArrayList<>();
 
+        @OneToMany(mappedBy = "addedRecipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+        private List<Comment> comments = new ArrayList<>();
+
+        @OneToMany(mappedBy = "addedRecipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+        private List<Review> reviews = new ArrayList<>();
+
         public void setIngredients(List<AddedIngredient> ingredients) {
-            this.ingredients = (List<AddedIngredient>) ingredients;
+                this.ingredients = (List<AddedIngredient>) ingredients;
+        }
+
+        @Override
+        public String toString() {
+                return "AddedRecipe{" +
+                        "id=" + id +
+                        ", title='" + title + '\'' +
+                        ", image='" + image + '\'' +
+                        '}';
         }
 }

@@ -1,4 +1,8 @@
 
+.background{
+  padding-bottom:50px;
+}
+
 .heart.full {
     color: red;
   }
@@ -6,5 +10,192 @@
   .heart {
     color: black;
     transition: color 0.3s ease; 
+  }
+  .rating {
+    unicode-bidi: bidi-override;
+    direction: ltr; 
+    text-align: left;
+  }
+  
+  .star {
+    display: inline-block;
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  
+  .star:hover,
+  .star.filled {
+    color: #ffcc00;
+  }
+  .recipe-details {
+    padding: 20px;
+  
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+  
+    .content-container {
+      display: flex;
+      
+  
+      .recipe-image-container {
+        position: relative;
+        margin-right: 20px;
+  
+        .recipe-image {
+          width: 400px;
+          height: 300px;
+          margin-left: 20%;
+          border-radius: 5px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+  
+        .update{
+          margin-top : 30px;
+          margin-left: 45%;
+          border-radius: 5px;
+
+        }
+        .average-rating{
+          margin-top : 30px;
+          margin-left: 45%;
+          border-radius: 5px;
+          font-size: 17px;
+          font-family: Lucida Console, sans-serif;
+        }
+
+        .button {
+          margin-left: 45%;
+          margin-top: 20px;
+          padding: 12px 24px;
+          background: repeating-linear-gradient( to left,#8d8d8d,#6d66db);
+          border: none;
+          border-radius: 24px;
+          color: #fff;
+    
+          &:hover,
+          &:focus {
+            background: linear-gradient(#40E0D0, #02a0d4);
+            outline: none;
+          }
+        }
+      
+      .button:hover {
+          background-color: #008CBA; /* Schimbă culoarea fundalului la hover */
+          color: white; /* Schimbă culoarea textului la hover */
+      }
+      
+        .heart {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          color: black;
+          font-size: 24px;
+          cursor: pointer;
+          transition: color 0.3s ease;
+  
+          &.full {
+            color: red;
+          }
+        }
+      }
+
+      .ing{
+        text-align: center;
+      }
+        .instructions-ingredients {
+        margin-left:10px;
+        margin-right:20px;
+        padding-left: 15%;
+        display: flex;
+        flex-direction: column;
+        margin-left: 30px;
+        
+  
+        .ingredients,
+        .instructions {
+          flex: 1;
+          border-radius: 10px; 
+          margin-top:30px;
+          
+          background-color: #f5f5f5; 
+        }
+  
+        h3 {
+          margin-top: 20px;
+        }
+  
+        ul,
+        ol {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  
+
+    .commentBox {
+      border: 1px solid #ccc; /* Bordura pentru fiecare "box" de comentariu */
+      border-radius: 5px; /* Rotunjirea colțurilor */
+      padding: 10px;
+      margin-bottom: 10px; /* Spațiul între fiecare "box" de comentariu */
+      margin-left:15%;
+      margin-right: 15%;
+  }
+  
+  .commentBox h4 {
+      font-size: 1.1rem; /* Dimensiunea username-ului */
+      margin-bottom: 5px; /* Spațiul între username și comentariu */
+  }
+  
+  .commentBox p {
+      margin-bottom: 0; /* Elimină spațiul de dedesubtul comentariului */
+  }
+  .comm1{
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 16px;
+    font-family: Lucida Console, sans-serif;
+  }
+  .comm2{
+    margin-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 24px;
+    font-family: Lucida Console, sans-serif;
+  }
+  textarea {
+    width: 70%; /* Latimea textarea */
+    height: 40px; /* Înălțimea textarea */
+    padding: 10px; /* Padding pentru spațierea conținutului */
+    margin-bottom: 10px; /* Spațiu între textarea și buton */
+    border: 1px solid #ccc; /* Adaugă o bordură subțire */
+    border-radius: 5px; /* Rotunjirea colțurilor */
+    resize: vertical; /* Permite redimensionarea verticală a textarea */
+    margin-left: 15%; /* Ajustează marginea stângă pentru aliniere */
+}
+textarea::placeholder {
+  font-size: 16px; /* Dimensiunea fontului pentru placeholder */
+  /* Alte stiluri CSS pentru placeholder */
+}
+
+button {
+    background-color: #4CAF50; /* Culoarea de fundal a butonului */
+    color: white; /* Culoarea textului */
+    padding: 10px 20px; /* Padding pentru spațierea conținutului */
+    border: none; /* Elimină bordura butonului */
+    border-radius: 5px; /* Rotunjirea colțurilor */
+    cursor: pointer; /* Cursor de mouse în formă de mână */
+    transition: background-color 0.3s ease; /* Tranzitie pentru hover */
+    display: block; /* Face ca butonul să apară ca un bloc */
+    margin: 0 auto; /* Ajustează marginea pentru a-l centra pe orizontală */
+}
+
+button:hover {
+    background-color: #45a049; /* Culoarea de fundal a butonului la hover */
+}
+
   }
   

@@ -38,6 +38,28 @@ export class AuthService {
     return 'user';
   }
 
+  username(): string {
+    const token = this.getToken();
+  
+    if (token) {
+      const tokenParts = token.split('.');
+    
+  
+      if (tokenParts.length === 3) {
+        const payload = JSON.parse(atob(tokenParts[1]));
+        
+        
+        const email: string = payload.sub || ''; 
+
+        const username = email.split('@')[0];
+
+        return username || 'user';
+      }
+    }
+    return 'user';
+  }
+  
+
   userId(): number {
     const token = this.getToken();
 

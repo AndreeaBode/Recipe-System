@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchFoodOptions } from '../search-food-options';
 import { HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
-import { Recipe } from '../recipe';
+import { Recipe } from '../models/recipe';
 
 
 
@@ -11,7 +11,8 @@ import { Recipe } from '../recipe';
   providedIn: 'root'
 })
 export class RecipeService {
-  private backendUrl = 'http://localhost:8080'; // Replace with your actual backend URL
+  private backendUrl = 'http://localhost:8080'; 
+  private backendUrl2 = 'http://localhost:8080/export'; 
 
   constructor(private http: HttpClient) {}
 
@@ -85,7 +86,22 @@ export class RecipeService {
     // Trimitem cererea POST către backend
     return this.http.post<any>(`${this.backendUrl}/add`, payload, { headers });
   }
+
+  submitRecipe(recipe: Recipe): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   
+    // Construim structura dorită a obiectului JSON
+    const payload = {
+      title: recipe.title,
+      image: recipe.image,
+      ingredients: recipe.ingredients.map(ingredient => ingredient.ingredient),
+      instructions: recipe.instructions.map(instruction => instruction.instruction)
+    };
+  
+    console.log("z" + payload);
+    // Trimitem cererea POST către backend
+    return this.http.post<any>(`${this.backendUrl}/submit`, payload, { headers });
+  }
   
   saveLike(userId: number, recipeId: number, name: string): Observable<any> {
     console.log("Da2");
@@ -121,4 +137,45 @@ export class RecipeService {
     const url = `${this.backendUrl}/love/favorite/${userId}`; 
     return this.http.get<any[]>(url);
   }
+
+  getCommentsByRecipeId(username: string, recipeId: number, additionalPath: string): Observable<any[]> {
+    console.log("NUUUUP")
+    return this.http.get<any[]>(`${this.backendUrl}/comments/getComment/${username}/${recipeId}/${additionalPath}`);
+  }
+
+  addCommentToRecipe(recipeId: number, userId: number,username: string, comment: any, additionalPath: string): Observable<any> {
+    let url = `${this.backendUrl}/comments/${recipeId}/${userId}/${username}/${additionalPath}/addComment`;
+
+    return this.http.post<any>(url, comment);
+}
+
+
+  // Obține recenziile pentru o anumită rețetă
+  getReviewsByRecipeId(username: string, recipeId: number, additionalPath: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.backendUrl}/reviews/getReview/${username}/${recipeId}/${additionalPath}`);
+  }
+
+  checkReview(userId: number, recipeId: number, additionalPath: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.backendUrl}/reviews/checkReview/${userId}/${recipeId}/${additionalPath}`);
+  }
+  // Adaugă o recenzie la o anumită rețetă
+  addReviewToRecipe(recipeId: number, review: any, userId: number, username: string, additionalPath: string): Observable<any> {
+    return this.http.post<any>(`${this.backendUrl}/reviews/${recipeId}/${userId}/${username}/${additionalPath}/addReview`, review);
+  }
+
+  updateReviewOfRecipe(recipeId: number, review: any, userId: number, username: string, additionalPath: string): Observable<any> {
+    return this.http.put<any>(`${this.backendUrl}/reviews/${recipeId}/${userId}/${username}/${additionalPath}/updateReview`, review);
+}
+
+  email(email: any): Observable<any> {
+    console.log("EEEEEEEEEE", email); 
+  
+    return this.http.post<any>(`${this.backendUrl}/s`, email); // Trimite adresa de email ca și corp al cererii POST
+  }
+
+  exportData(): Observable<string> {
+    return this.http.get<string>(this.backendUrl2, { responseType: 'text' as 'json' });
+  }
+  
+  
 }

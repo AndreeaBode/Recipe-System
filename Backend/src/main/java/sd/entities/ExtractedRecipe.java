@@ -27,8 +27,24 @@ public class ExtractedRecipe {
     private List<Step> steps = new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "extractedRecipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "extractedRecipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Review> reviews = new ArrayList<>();
+
+
 
     public void setIngredients(List<Ingredient> ingredients) {
     this.ingredients = (List<Ingredient>) ingredients;
 }
+    @Override
+    public String toString() {
+        return "ExtractedRecipe{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
+
 }

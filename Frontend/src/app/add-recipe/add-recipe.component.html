@@ -1,3 +1,4 @@
+<div class = "background">
 <form (ngSubmit)="submitRecipe()">
   <div>
     <label for="title">Titlu:</label>
@@ -11,7 +12,7 @@
   <div>
     <label for="ingredient">Ingrediente:</label>
     <input type="text" [(ngModel)]="newIngredient" name="newIngredient">
-    <button type="button" (click)="addFieldIngredient()">Adaugă ingredient</button>
+    <button type="button" (click)="addFieldIngredient()" class = "button">Adaugă ingredient</button>
     <div *ngFor="let ingredient of recipe.ingredients; let i = index">
         <label for="ingredient{{i}}">Ingredient {{i + 1}}:</label>
         <input type="text" [(ngModel)]="recipe.ingredients[i].ingredient" name="ingredient{{i}}" required>
@@ -19,9 +20,9 @@
 </div>
 
 <div>
-    <label for="instruction">Pași:</label>
+    <label for="instruction" class = "label">Pași:</label>
     <input type="text" [(ngModel)]="newInstruction" name="newInstruction">
-    <button type="button" (click)="addFieldStep()">Adaugă pas</button>
+    <button type="button" (click)="addFieldStep()" class = "button">Adaugă pas</button>
     <div *ngFor="let instruction of recipe.instructions; let i = index">
         <label for="instruction{{i}}">Pas {{i + 1}}:</label>
         <input type="text" [(ngModel)]="recipe.instructions[i].instruction" name="instruction{{i}}" required>
@@ -29,5 +30,7 @@
 </div>
 
 
-  <button type="submit">Adaugă rețetă</button>
+  <button type="submit" class = "button2">Adaugă rețetă</button>
 </form>
+
+</div>

@@ -51,12 +51,12 @@ public class LoveReactController {
     }
 
 
-    @GetMapping("/added-recipe-detail")
+/*    @GetMapping("/added-recipe-detail")
     public List<AddedRecipeDTO> getAddedRecipesDetail() {
         List<AddedRecipeDTO> recipes = loveReactService.getAllAddedRecipes();
         System.out.println("Recipe" + recipes);
         return recipes;
-    }
+    }*/
 
     @GetMapping("/favorite/{userId}")
     public ResponseEntity<List<FavoriteDTO>> favorite(@PathVariable int userId) {

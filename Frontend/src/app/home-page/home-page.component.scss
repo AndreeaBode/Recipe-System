@@ -1,42 +1,214 @@
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: black;
 }
+
+
+.background-image {
+  width: 100%;
+  margin-top: 0;
+}
+
+.background-image img {
+  display: block;
+  width: 90%;
+  height: auto;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+
+.background-image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 .main {
-    width: 100%;
-   // background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 50%), url('../1.jpg');
-    background-position: center;
-    background-size: cover;
-    height: 91.7vh;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  align-items: center;
+  padding-top: 60px;
+  min-height: 100vh;
+  color: #fff;
 }
+
+.recipes-menu {
+  display: flex;
+  background-color: black;
+  overflow-x: auto;
+}
+
+.recipe-card {
+  position: relative;
+  width: 350px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+
+}
+
+.recipe-link {
+  display: block;
+  position: relative;
+  text-decoration: none;
+}
+
+.recipe-image {
+  width: 250px;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
+
+.image-title {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  background-color: rgba(64, 63, 63, 0.911);
+  padding: 5px 0;
+  box-sizing: border-box;
+}
+
+
 
 .content {
-    width: auto;
-    height: auto;
-    margin: auto;
-    color: #fff;
-    position: relative;
+  width: 90%;
+  max-width: 600px;
+}
 
-    .par {
-        padding-left:10%;
-        padding-bottom: 25px;
-        font-family: Arial;
-        letter-spacing: 1.2px;
-        line-height: 30px;
-    }
-    h1{
-        padding-top:10%;
-        padding-left:10%;
-        font-family: 'Times New Roman';
-        font-size: 50px;
-    }
+.email,
+.contact {
+  padding: 20px;
+  background-color: black;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 
-    span {
-        color: #ff7200;
-        font-size: 65px;
-    }
-    
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1em;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+textarea::placeholder {
+  color: #aaa;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #e68900;
+}
+
+@media (min-width: 768px) {
+  .content {
+    width: 50%;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start; /* Alinează elementele începând de la stânga */
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 
+.logo {
+  flex-grow: 1;
+  margin-right: 20px; /* Adaugă spațiu între logo și tabs */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tabs {
+  flex-grow: 2;
+  display: flex;
+  gap: 10px;
+}
+
+
+.logo p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons img {
+  width: 30px;
+  margin-right: 10px;
+}
+
+
+
+.tabs {
+  margin-left: 10px;
+  display: flex;
+  gap: 80px;
+
+  .column {
+  flex-basis: 70%; /* Ajustează valoarea pentru a face coloana mai lată */
+  flex-grow: 1;
+  width: 100%;
+
+  &:first-child {
+    margin-right: 50px;
+  }
+
+  div {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+
+}
+
+.nav-link {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+
+
+  &:hover {
+    color: #555;
+  }
+}

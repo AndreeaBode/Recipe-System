@@ -1,5 +1,5 @@
-import { Ingredient } from "./ingredient";
 import { Instruction } from "./instruction";
+import { Ingredient } from "./ingredient";
 
 
 export class Recipe {

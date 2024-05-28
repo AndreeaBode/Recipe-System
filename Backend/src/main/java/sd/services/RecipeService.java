@@ -14,10 +14,10 @@ import sd.dtos.ExtractedDTO;
 import sd.dtos.ExtractedRecipeDTO;
 import sd.dtos.builders.ExtractedRecipeBuilder;
 import sd.entities.*;
+import sd.entities.RecipeUnderReview;
 import sd.repositories.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,6 +30,8 @@ public class RecipeService {
 
     @Autowired
     private ExtractedRecipeRepository extractedRecipeRepository;
+    @Autowired
+    private RecipeUnderReviewRepository recipeUnderReviewRepository;
 
     @Autowired
     private AddedRecipeRepository addedRecipeRepository;
@@ -41,8 +43,9 @@ public class RecipeService {
     private StepRepository stepRepository;
 
     private final String spoonacularApiKey = "d79ab01d2eff47d081feed07a650ff00";
-    //private final String spoonacularApiKey = "da3a95ad9e794dc3b5d43cf1f0f8cf60";
-    //private final String spoonacularApiKey = "e0f0174758e74ee18fe3567c329272b5";
+   //private final String spoonacularApiKey = "da3a95ad9e794dc3b5d43cf1f0f8cf60";
+   // private final String spoonacularApiKey = "e0f0174758e74ee18fe3567c329272b5";
+   // private final String spoonacularApiKey = "08a193a93a2c4a05b3f79421651dd8a7";
     private final String searchApiUrl = "https://api.spoonacular.com/recipes/complexSearch";
     private final String randomApiUrl = "https://api.spoonacular.com/recipes/random";
     private final String recipeInformationApiUrl = "https://api.spoonacular.com/recipes/";
@@ -133,7 +136,7 @@ public class RecipeService {
         }
     }
 
-    public ResponseEntity<String> extractRecipe(String url) {
+   /* public ResponseEntity<String> extractRecipe(String url) {
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("https://api.spoonacular.com/recipes/extract")
                     .queryParam("url", url)
@@ -180,7 +183,7 @@ public class RecipeService {
                 }
             }
 
-            saveExtractedRecipe(title, image, originalIngredientsList, instructionsList);
+           // saveExtractedRecipe(title, image, originalIngredientsList, instructionsList);
 
             System.out.println(instructionsList);
             return responseEntity;
@@ -237,7 +240,7 @@ public class RecipeService {
             throw new RuntimeException("Error saving extracted recipe: " + e.getMessage());
         }
     }
-
+*/
 
     public ResponseEntity<String> findByIngredients(String ingredients, int ranking) {
         try {
@@ -278,14 +281,14 @@ public class RecipeService {
     }
 
 
-    public List<ExtractedRecipeDTO> getAllRecipes() {
+/*    public List<ExtractedRecipeDTO> getAllRecipes() {
         List<ExtractedRecipe> extractedRecipes = extractedRecipeRepository.findAll();
         return extractedRecipes.stream()
                 .map(ExtractedRecipeBuilder::buildDTO)
                 .collect(Collectors.toList());
-    }
+    }*/
 
-    public ExtractedDTO getDetailDisghen(int id) {
+/*    public ExtractedDTO getDetailDisghen(int id) {
         Optional<ExtractedRecipe> extractedRecipeOptional = extractedRecipeRepository.findById(id);
         if (extractedRecipeOptional.isPresent()) {
             ExtractedRecipe extractedRecipe = extractedRecipeOptional.get();
@@ -295,9 +298,9 @@ public class RecipeService {
         } else {
             throw new RuntimeException("Recipe not found with id: " + id);
         }
-    }
+    }*/
 
-    public AddedRecipeDTO addRecipe(AddedRecipeDTO recipeDTO) {
+/*    public AddedRecipeDTO addRecipe(AddedRecipeDTO recipeDTO) {
         try {
 
             String title = recipeDTO.getTitle();
@@ -313,8 +316,71 @@ public class RecipeService {
             e.printStackTrace();
             throw new RuntimeException("Error adding recipe: " + e.getMessage());
         }
+    }*/
+
+   /* public RecipeUnderReview submitRecipeForApproval(RecipeUnderReview recipe) {
+        try {
+
+            String title = recipe.getTitle();
+            String image = recipe.getImage();
+            List<RecipeUnderReviewIngredient> ingredients = recipe.getIngredients();
+            List<RecipeUnderReviewStep> instructions = recipe.getInstructions();
+
+
+            saveRecipeUnderReview(title, image, ingredients, instructions);
+
+            return recipe;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error adding recipe: " + e.getMessage());
+        }
     }
 
+    private void saveRecipeUnderReview(String title, String image, List<RecipeUnderReviewIngredient> ing, List<RecipeUnderReviewStep> instructions) {
+        try {
+            RecipeUnderReview recipeUnderReview = new RecipeUnderReview();
+            recipeUnderReview.setTitle(title);
+            recipeUnderReview.setImage(image);
+
+            List<RecipeUnderReviewIngredient> ingredients = ing;
+
+            if (!ingredients.isEmpty()) {
+                RecipeUnderReviewIngredient ultimulElement = ingredients.get(ingredients.size() - 1);
+                ingredients.remove(ingredients.size() - 1);
+                ingredients.add(0, ultimulElement);
+                System.out.println("Ing" + "  "+ingredients.toString());
+            } else {
+                System.out.println("Lista de ingrediente este goală.");
+            }
+            List<RecipeUnderReviewStep> step = instructions;
+            System.out.println("STEP"+ step);
+
+            if (!step.isEmpty()) {
+                RecipeUnderReviewStep ultimulElement = step.get(step.size() - 1);
+                step.remove(step.size() - 1);
+                step.add(0, ultimulElement);
+                System.out.println("Ing" + "  "+step.toString());
+            } else {
+                System.out.println("Lista de ingrediente este goală.");
+            }
+            for (RecipeUnderReviewIngredient ingredient : ingredients) {
+                ingredient.setRecipe(recipeUnderReview);
+            }
+
+            for (RecipeUnderReviewStep instruction : step) {
+                instruction.setRecipe(recipeUnderReview);
+            }
+
+            recipeUnderReview.setIngredients(ingredients);
+            recipeUnderReview.setInstructions(step);
+            recipeUnderReviewRepository.save(recipeUnderReview);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error saving recipe: " + e.getMessage());
+        }
+    }
+*/
+/*
     private void saveRecipe(String title, String image, List<AddedIngredient> ing, List<AddedStep> instructions) {
         try {
             AddedRecipe addedRecipe = new AddedRecipe();
@@ -323,45 +389,19 @@ public class RecipeService {
 
             List<AddedIngredient> ingredients = ing;
 
-            if (!ingredients.isEmpty()) {
-                // Obținem ultimul element din listă
-                AddedIngredient ultimulElement = ingredients.get(ingredients.size() - 1);
+            List<AddedStep> steps = instructions;
 
-                // Ștergem ultimul element din listă
-                ingredients.remove(ingredients.size() - 1);
-
-                // Adăugăm ultimul element la începutul listei
-                ingredients.add(0, ultimulElement);
-                System.out.println("Ing" + "  "+ingredients.toString());
-            } else {
-                System.out.println("Lista de ingrediente este goală.");
-            }
-            List<AddedStep> step = instructions;
-
-            if (!step.isEmpty()) {
-                // Obținem ultimul element din listă
-                AddedStep ultimulElement = step.get(step.size() - 1);
-
-                // Ștergem ultimul element din listă
-                step.remove(step.size() - 1);
-
-                // Adăugăm ultimul element la începutul listei
-                step.add(0, ultimulElement);
-                System.out.println("Ing" + "  "+step.toString());
-            } else {
-                System.out.println("Lista de ingrediente este goală.");
-            }
             for (AddedIngredient ingredient : ingredients) {
                 ingredient.setRecipe(addedRecipe);
             }
 
-            for (AddedStep instruction : step) {
+            for (AddedStep instruction : steps) {
                 instruction.setRecipe(addedRecipe);
             }
 
             // Adăugăm lista de ingrediente și instrucțiuni la rețetă
             addedRecipe.setIngredients(ingredients);
-            addedRecipe.setSteps(step);
+            addedRecipe.setSteps(steps);
 
             // Salvăm rețeta în baza de date
             addedRecipeRepository.save(addedRecipe);
@@ -370,8 +410,11 @@ public class RecipeService {
             throw new RuntimeException("Error saving recipe: " + e.getMessage());
         }
     }
+*/
 
 
+
+/*
     public AddedRecipeDTO getAddedDetailRecipe(int id) {
         Optional<AddedRecipe> addedRecipeOptional = addedRecipeRepository.findById(id);
         if (addedRecipeOptional.isPresent()) {
@@ -383,6 +426,7 @@ public class RecipeService {
             throw new RuntimeException("Recipe not found with id: " + id);
         }
     }
+*/
 
 }
 

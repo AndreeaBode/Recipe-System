@@ -8,6 +8,7 @@ import { LikeService } from '../services/like.service';
 @Component({
   selector: 'app-recipe',
   templateUrl: './recipe.component.html',
+  styleUrls: ['./recipe.component.scss']
 })
 export class RecipeComponent {
   searchResult: any[] = [];
@@ -95,7 +96,7 @@ export class RecipeComponent {
     console.log("R",  recipe.id);
     this.recipeService.checkIfLiked(userId, recipeId).subscribe(
       response => {
-        recipe.isLoved = response; // Setează proprietatea isLoved direct în obiectul recipe
+        recipe.isLoved = response;
       },
       error => {
         console.error('Error checking if liked:', error);

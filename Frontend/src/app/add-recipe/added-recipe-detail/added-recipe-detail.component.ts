@@ -27,10 +27,9 @@ export class AddedRecipeDetailComponent implements OnInit {
     this.recipeService.getAddedRecipeDetails().subscribe(
       (response: any) => {
         this.recipes = response;
-        // Inițializăm starea inimioarelor pentru fiecare rețetă
         this.recipes.forEach(recipe => {
           console.log("D", recipe);
-          this.checkIfLiked(recipe); // Verificăm starea inițială a inimii pentru fiecare rețetă
+          this.checkIfLiked(recipe); //76
         });
       },
       (error) => {
@@ -104,7 +103,7 @@ export class AddedRecipeDetailComponent implements OnInit {
   toggleLike(recipe: any): void {
     const userId = this.authService.userId();
     if (!userId) {
-      // Nu putem adăuga sau șterge like-ul fără un utilizator autentificat
+      
       return;
     }
 
@@ -113,7 +112,7 @@ export class AddedRecipeDetailComponent implements OnInit {
     console.log(name);
     recipe.isLoved = !recipe.isLoved;
 
-    console.log("Lo", recipe.isLoved);
+    console.log("Afiseazaaaaaaaaa!!!!!!!!!!", recipe.isLoved);
     this.likeService.toggleLike(userId, recipeId, recipe.isLoved, name).subscribe(
       response => {
         console.log('Succes');

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import sd.dtos.AddedRecipeDTO;
 import sd.dtos.ExtractedDTO;
 import sd.dtos.ExtractedRecipeDTO;
+import sd.entities.RecipeUnderReview;
 import sd.services.RecipeService;
 
 import java.util.List;
@@ -52,12 +53,12 @@ public class RecipeController {
         return ResponseEntity.ok(cleanResponseBody);
     }
 
-    @GetMapping("/extractRecipe")
+/*    @GetMapping("/extractRecipe")
     public ResponseEntity<String> extractRecipe(@RequestParam String url) {
         ResponseEntity<String> responseEntity = recipeService.extractRecipe(url);
         String responseBody = responseEntity.getBody();
         return ResponseEntity.ok(responseBody);
-    }
+    }*/
 
     @GetMapping("/recipes/findByIngredients")
     public ResponseEntity<String> findRecipesByIngredients(
@@ -76,7 +77,7 @@ public class RecipeController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @GetMapping("/recipes")
+/*    @GetMapping("/recipes")
     public List<ExtractedRecipeDTO> getAllRecipes() {
         List<ExtractedRecipeDTO> recipes = recipeService.getAllRecipes();
         System.out.println("Recipe" + recipes);
@@ -88,15 +89,15 @@ public class RecipeController {
         List<ExtractedRecipeDTO> recipes = recipeService.getAllRecipes();
         System.out.println("Recipe" + recipes);
         return recipes;
-    }
+    }*/
 
-    @GetMapping("/dishgen-detail/{id}")
+/*    @GetMapping("/dishgen-detail/{id}")
     public ResponseEntity<ExtractedDTO> getDetailDisghen(@PathVariable("id") int id) {
         ExtractedDTO extractedDTO = recipeService.getDetailDisghen(id);
         return new ResponseEntity<>(extractedDTO, HttpStatus.OK);
-    }
+    }*/
 
-    @PostMapping("/add")
+/*    @PostMapping("/add")
     public ResponseEntity<AddedRecipeDTO> addRecipe(@RequestBody String payload) {
         try {
             AddedRecipeDTO recipeDTO = objectMapper.readValue(payload, AddedRecipeDTO.class);
@@ -107,12 +108,25 @@ public class RecipeController {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
+    }*/
+/*    @PostMapping("/submit")
+    public ResponseEntity<RecipeUnderReview> submitRecipe(@RequestBody RecipeUnderReview recipe) {
+        RecipeUnderReview savedRecipe = recipeService.submitRecipeForApproval(recipe);
+
+        if (savedRecipe != null) {
+            System.out.println(savedRecipe.toString());
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            System.out.println("error");
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     @GetMapping("/added-detail/{id}")
     public ResponseEntity<AddedRecipeDTO> getAddedDetailRecipe(@PathVariable("id") int id) {
         AddedRecipeDTO addedRecipeDTO = recipeService.getAddedDetailRecipe(id);
         return new ResponseEntity<>(addedRecipeDTO,HttpStatus.OK);
-    }
+    }*/
 }
 

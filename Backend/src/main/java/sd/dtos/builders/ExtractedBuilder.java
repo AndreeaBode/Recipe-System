@@ -7,8 +7,12 @@ import sd.entities.ExtractedRecipe;
 public class ExtractedBuilder {
 
     public static ExtractedDTO buildDTO(ExtractedRecipe extractedRecipe) {
-        return new ExtractedDTO(extractedRecipe.getId(), extractedRecipe.getTitle(), extractedRecipe.getImage(), extractedRecipe.getIngredients(), extractedRecipe.getSteps());
+        return new ExtractedDTO(
+                extractedRecipe.getId(),
+                extractedRecipe.getTitle(),
+                extractedRecipe.getImage(),
+                extractedRecipe.getIngredients(),
+                extractedRecipe.getSteps()
+        );
     }
-
-
 }
