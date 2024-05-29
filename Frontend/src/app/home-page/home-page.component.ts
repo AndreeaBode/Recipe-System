@@ -3,16 +3,22 @@ import { ToastrService } from 'ngx-toastr';
 import { RecipeService } from '../services/recipe.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
+
+
 export class HomePageComponent {
   email: string = '';
   exportMessage: string = '';
-  showNewsletterForm: boolean = false;
+  newsletterVisible = false;
   showContactForm: boolean = false;
   contactName: string = '';
   contactEmail: string = '';
@@ -26,28 +32,39 @@ export class HomePageComponent {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
-  showNewsletter() {
-    this.showNewsletterForm = true;
-    this.showContactForm = false;
+  showNewsletterForm() {
+    this.newsletterVisible = true;
   }
+
 
   showContact() {
-    this.showNewsletterForm = false;
+   // this.showNewsletterForm = false;
     this.showContactForm = true;
   }
-
   subscribeEmail(): void {
     // Verificare validitate adresa de email
     if (!this.validateEmail(this.email)) {
       this.toastr.error('Please enter a valid email address!', 'Error');
       return;
     }
-
+  
     this.recipeService.email(this.email)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          console.error('Full error response:', error);
+          this.toastr.error('An error occurred while subscribing to the newsletter. Please try again later.', 'Error');
+          return throwError(error);
+        })
+      )
       .subscribe(
-        () => {
-          this.toastr.success('You have successfully subscribed to the newsletter!', 'Success');
-          this.email = '';
+        (response: string) => {
+          console.log('Response from server:', response);
+          if (response === 'Subscribed successfully') {
+            this.toastr.success(response, 'Success');
+            this.email = '';
+          } else {
+            this.toastr.error('An error occurred while subscribing to the newsletter. Please try again later.', 'Error');
+          }
         },
         (error: any) => {
           console.error('Error subscribing to newsletter:', error);
@@ -55,6 +72,7 @@ export class HomePageComponent {
         }
       );
   }
+  
 
   sendContactMessage() {
     console.log(`Name: ${this.contactName}, Email: ${this.contactEmail}, Message: ${this.contactMessage}`);

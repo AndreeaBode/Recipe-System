@@ -2,7 +2,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: black;
 }
 
 
@@ -24,6 +23,7 @@
   display: block;
   max-width: 100%;
   height: auto;
+  margin-bottom: 60px;
 }
 
 .main {
@@ -32,7 +32,7 @@
   background-color: black;
   align-items: center;
   padding-top: 60px;
-  min-height: 100vh;
+  padding-bottom:10px;
   color: #fff;
 }
 
@@ -45,8 +45,7 @@
 .recipe-card {
   position: relative;
   width: 350px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin-left:30px;
 
 }
 
@@ -81,6 +80,7 @@
 .content {
   width: 90%;
   max-width: 600px;
+ 
 }
 
 .email,
@@ -139,7 +139,7 @@ button:hover {
 
 .container {
   display: flex;
-  justify-content: flex-start; /* Alinează elementele începând de la stânga */
+  justify-content: flex-start; 
   align-items: center;
   padding: 20px;
   width: 100%;
@@ -149,7 +149,7 @@ button:hover {
 
 .logo {
   flex-grow: 1;
-  margin-right: 20px; /* Adaugă spațiu între logo și tabs */
+  margin-right: 20px; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,6 +159,7 @@ button:hover {
   flex-grow: 2;
   display: flex;
   gap: 10px;
+  
 }
 
 
@@ -166,6 +167,7 @@ button:hover {
   margin-top: 10px;
   font-size: 14px;
   color: #fff;
+  
 }
 
 .social-icons {
@@ -185,7 +187,7 @@ button:hover {
   gap: 80px;
 
   .column {
-  flex-basis: 70%; /* Ajustează valoarea pentru a face coloana mai lată */
+  flex-basis: 70%; 
   flex-grow: 1;
   width: 100%;
 
@@ -211,4 +213,44 @@ button:hover {
   &:hover {
     color: #555;
   }
+}.newsletter-form {
+  margin-top: 10px;
+}
+
+.newsletter-form input {
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1em;
+  background-color: rgba(255, 255, 255, 0.1); 
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.5); 
+}
+
+
+.newsletter-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #e68900;
+}
+
+.contact-info img {
+  width: 20px;
+  margin-right: 10px;
+}
+
+.space{
+margin-bottom: 50px;
+
 }

@@ -167,12 +167,10 @@ export class RecipeService {
     return this.http.put<any>(`${this.backendUrl}/reviews/${recipeId}/${userId}/${username}/${additionalPath}/updateReview`, review);
 }
 
-  email(email: any): Observable<any> {
-    console.log("EEEEEEEEEE", email); 
-  
-    return this.http.post<any>(`${this.backendUrl}/s`, email); // Trimite adresa de email ca și corp al cererii POST
-  }
-
+email(email: string) {
+  const headers = new HttpHeaders({ 'Content-Type': 'text/plain' });
+  return this.http.post('http://localhost:8080/s', email, { responseType: 'text' });
+}
   exportData(): Observable<string> {
     return this.http.get<string>(this.backendUrl2, { responseType: 'text' as 'json' });
   }
