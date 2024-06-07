@@ -13,13 +13,13 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute, 
-    private router: Router, // Injectăm serviciul Router
-    private recipeService: RecipeService // Injectăm serviciul RecipeService
+    private router: Router,
+    private recipeService: RecipeService 
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.recipeId = +params['id']; // Convertim la număr
+      this.recipeId = +params['id']; 
       this.recipeService.getRecipeInformation(this.recipeId, false).subscribe(
         (response) => {
           this.recipe = response;
@@ -32,7 +32,6 @@ export class RecipeDetailComponent implements OnInit {
     });
   }
 
-  // Metoda pentru a reveni înapoi la pagina principală și a menține rezultatele căutării
   goBackToRecipes(): void {
     this.router.navigate(['/recipes'], { queryParamsHandling: 'preserve' });
   }

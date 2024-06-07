@@ -75,7 +75,6 @@ public class LoveReactService {
             System.out.println("B" + " " + loveReact);
             loveReactRepository.delete(loveReact);
         } else {
-            // Dacă nu găsim o reacție de apreciere (like) pentru userId și recipeId specificate, putem arunca o excepție sau trata altfel această situație.
             throw new EntityNotFoundException("LoveReact not found for userId " + userId + " and recipeId " + recipeId + "änd name "+ name);
         }
     }
@@ -133,24 +132,21 @@ public class LoveReactService {
             }
             if (name.equals("spoonacular")) {
                 try {
-                    // Construim URL-ul pentru a obține informații despre rețetă
                     String spoonacularUrl = "https://api.spoonacular.com/recipes/" + recipeId + "/information";
-
 
                     UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(spoonacularUrl)
                             .queryParam("apiKey", spoonacularApiKey)
                             .queryParam("includeNutrition", false); // Excludem datele de nutriție
 
-                    // Facem cererea GET către serviciul Spoonacular
+
                     RestTemplate restTemplate = new RestTemplate();
                     ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
 
-                    // Verificăm dacă cererea a fost cu succes
+
                     if (responseEntity.getStatusCode() == HttpStatus.OK) {
                         String responseBody = responseEntity.getBody();
                         System.out.println("Response Body: " + responseBody);
 
-                        // Parsează răspunsul și extrage informațiile relevante (titlul și imaginea)
                         FavoriteDTO recipeDTO = parseResponse(responseBody);
                         recipeDTO.setName(name);
                         recipeDTO.setRecipeId(recipeId);
@@ -162,11 +158,9 @@ public class LoveReactService {
                         System.out.println();
                         System.out.println();
                     } else {
-                        // Dacă cererea nu a fost cu succes, afișăm un mesaj corespunzător
                         System.err.println("Cererea către serviciul Spoonacular a eșuat: " + responseEntity.getStatusCode());
                     }
                 } catch (RestClientException e) {
-                    // Aici putem trata cazul în care cererea întâmpină o problemă
                     throw new RuntimeException(e);
                 }
             }

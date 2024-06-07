@@ -17,21 +17,21 @@
 }
 
 .recipe-item-wrapper {
-  flex: 1 0 calc(33.33% - 20px); /* Ajustăm flex-grow pentru a permite spațiu între elemente */
-  margin-bottom: 20px; /* Adăugăm spațiu între elemente folosind margin-bottom */
-  box-sizing: border-box; /* Asigurăm că marginul este inclus în calculul dimensiunilor */
+  flex: 1 0 calc(33.33% - 20px); 
+  margin-bottom: 20px; 
+  box-sizing: border-box; 
 }
 
 
 .recipe-item {
   position: relative;
-  margin-bottom: 20px; /* Adăugăm spațiu între elemente folosind margin-bottom */
+  margin-bottom: 20px;
   display: inline-block;
 }
 
 .recipe-link {
   text-decoration: none;
-  display: block; /* Facem link-ul un element de tip bloc pentru a se extinde pe toată lățimea imaginii */
+  display: block;
 }
 
 
@@ -67,8 +67,8 @@
 
 .heart {
   position: absolute;
-  top: 10px; /* Adjusted to create space from the top */
-  right: 10px; /* Adjusted to create space from the right */
+  top: 10px; 
+  right: 10px; 
   font-size: 24px;
   color: white;
   cursor: pointer;

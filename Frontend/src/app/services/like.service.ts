@@ -1,4 +1,3 @@
-// like.service.ts
 
 import { Injectable } from '@angular/core';
 import { RecipeService } from './recipe.service';

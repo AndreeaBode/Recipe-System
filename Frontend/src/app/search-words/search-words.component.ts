@@ -17,7 +17,7 @@ export class SearchWordsComponent implements OnInit {
 
   ngOnInit(): void {
     this.recipes = this.searchResultsService.getCachedResults();
-    this.updatePagedRecipes(0); // Initialize pagedRecipes
+    this.updatePagedRecipes(0); 
   }
 
   showRecipeDetails(id: number): void {

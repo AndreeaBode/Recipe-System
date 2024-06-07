@@ -57,7 +57,7 @@ button:hover {
 }
 
 .recipe-item {
-  flex-basis: calc(25% - 10px); /* Ajustăm flex-basis pentru a ocupa aproximativ 25% din lățime */
+  flex-basis: calc(25% - 10px); 
   margin-bottom: 20px;
   box-sizing: border-box;
 }

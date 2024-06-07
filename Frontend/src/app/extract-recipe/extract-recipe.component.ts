@@ -16,7 +16,7 @@ export class ExtractRecipeComponent {
   recipeUrl: string = '';
   extractedRecipe: any;
   recipeDetails: any = {};
-  showInfo: boolean = false; // Add this variable
+  showInfo: boolean = false;
   
   constructor(private recipeService: RecipeService, private toastr: ToastrService) {}
 
@@ -26,7 +26,7 @@ export class ExtractRecipeComponent {
         this.recipeDetails = response;
         console.log("Resss ", response);
         console.log("Extracted Recipe:", this.recipeDetails);
-        this.showInfo = true; // Set showInfo to true after successful extraction
+        this.showInfo = true; 
       },
       (error: HttpErrorResponse) => {
         if (error.status === 200) {

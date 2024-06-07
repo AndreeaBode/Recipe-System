@@ -40,14 +40,14 @@
   display: flex;
   background-color: black;
   overflow-x: scroll;
-  overflow-y: hidden; /* Ascunde bara de derulare verticală */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
+  overflow-y: hidden; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
   padding-bottom: 60px;
 }
 
 .recipes-menu::-webkit-scrollbar {
-  width: 0; /* Ascunde bara de derulare orizontală pentru Chrome, Safari și Opera */
+  width: 0; 
 }
 
 .recipe-card {
@@ -284,14 +284,14 @@ margin-bottom: 50px;
 .clickable-word {
   margin: 5px;
   cursor: pointer;
-  color: #b18aff; /* Adjust text color if needed */
+  color: #b18aff; 
 }
 
 .big-word {
-  font-size: 2em; /* Larger size for big words */
+  font-size: 2em; 
 }
 
 .small-word {
-  font-size: 1em; /* Smaller size for small words */
+  font-size: 1em;
 }
 

@@ -64,7 +64,6 @@ public class RecipeService {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
 
-            // Parsează și salvează rezultatele în baza de date
            // parseResponseAndSaveToDatabase(responseEntity.getBody());
             String responseBody = responseEntity.getBody();
             System.out.println("Response Body: " + responseBody);

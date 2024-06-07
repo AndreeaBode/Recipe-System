@@ -3,8 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { Observable, of } from 'rxjs';
-import { User } from '../models/user';
-import { Device } from '../device';
+import { User } from '../user';
 import { map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 

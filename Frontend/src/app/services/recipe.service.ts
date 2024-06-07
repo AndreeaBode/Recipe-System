@@ -75,7 +75,6 @@ export class RecipeService {
   addRecipe(recipe: Recipe): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   
-    // Construim structura dorită a obiectului JSON
     const payload = {
       title: recipe.title,
       image: recipe.image,
@@ -91,7 +90,7 @@ export class RecipeService {
   submitRecipe(recipe: Recipe): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   
-    // Construim structura dorită a obiectului JSON
+
     const payload = {
       title: recipe.title,
       image: recipe.image,
@@ -100,7 +99,6 @@ export class RecipeService {
     };
   
     console.log("z" + payload);
-    // Trimitem cererea POST către backend
     return this.http.post<any>(`${this.backendUrl}/submit`, payload, { headers });
   }
   
@@ -151,7 +149,6 @@ export class RecipeService {
 }
 
 
-  // Obține recenziile pentru o anumită rețetă
   getReviewsByRecipeId(username: string, recipeId: number, additionalPath: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.backendUrl}/reviews/getReview/${username}/${recipeId}/${additionalPath}`);
   }
@@ -159,7 +156,7 @@ export class RecipeService {
   checkReview(userId: number, recipeId: number, additionalPath: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.backendUrl}/reviews/checkReview/${userId}/${recipeId}/${additionalPath}`);
   }
-  // Adaugă o recenzie la o anumită rețetă
+ 
   addReviewToRecipe(recipeId: number, review: any, userId: number, username: string, additionalPath: string): Observable<any> {
     return this.http.post<any>(`${this.backendUrl}/reviews/${recipeId}/${userId}/${username}/${additionalPath}/addReview`, review);
   }

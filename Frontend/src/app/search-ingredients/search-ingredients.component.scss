@@ -9,29 +9,29 @@
 
 .background {
 
-  padding: 20px; // Adaugăm puțin spațiu în jurul conținutului
+  padding: 20px; 
 }
 
 .form {
-  max-width: 400px; /* Ajustează lățimea maximă a formularului */
-  margin: 0 auto; /* Centrare horizontală a formularului */
-  padding: 20px; /* Adaugă puțin spațiu în jurul conținutului formularului */
-  border: 1px solid #ccc; /* Adaugă o linie de contur pentru formular */
-  border-radius: 5px; /* Rotunjirea marginilor formularului */
+  max-width: 400px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
   margin-bottom: 50px;
 }
 
 .form label {
-  margin-bottom: 5px; /* Adaugă un spațiu mic între etichete și câmpurile de input */
-  display: block; /* Asigură ca etichetele să fie pe linii separate */
+  margin-bottom: 5px; 
+  display: block; 
 }
 
 .form input {
-  width: calc(100% - 10px); /* Ajustează lățimea câmpurilor de input pentru a se potrivi în interiorul formularului */
-  padding: 10px; /* Adaugă un spațiu între text și marginea câmpurilor de input */
-  margin-bottom: 10px; /* Adaugă un spațiu între câmpurile de input */
-  border: 1px solid #ccc; /* Adaugă o linie de contur pentru câmpurile de input */
-  border-radius: 3px; /* Rotunjirea marginilor câmpurilor de input */
+  width: calc(100% - 10px); 
+  padding: 10px; 
+  margin-bottom: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 3px; 
 }
 
 .form button {
@@ -57,12 +57,8 @@
   justify-content: space-between;
   margin-top: 20px;
   width: 90%;
-  /* Modifică lățimea containerului pentru a permite afișarea a trei rețete */
   max-width: 1200px;
-  /* Adaugă o lățime maximă pentru a evita întinderea excesivă pe ecrane mari */
   margin: 0 auto;
-  /* Centrare */
-
 
   .recipe {
     flex-basis: calc(32% - 20px);
@@ -92,7 +88,6 @@
     .used-ingredients,
     .missed-ingredients {
       width: 48%;
-      /* Asigură că cele două coloane ocupă aproape întreaga lățime */
     }
 
     ul {
@@ -120,7 +115,6 @@
 
     .ingredient-image {
       width: 5px;
-      /* Ajustați dimensiunea imaginilor de ingrediente la 30px */
       height: 5px;
       border-radius: 50%;
       margin-right: 10px;
@@ -163,19 +157,19 @@
       display: flex;
       align-items: center;
       margin-bottom: 10px;
-      text-align: center; // Centrăm textul ingredientului
+      text-align: center; 
     }
 
     .ingredient-image {
-      width: 30px; // Setăm dimensiunea imaginilor de ingrediente la 50px
+      width: 30px; 
       height: 30px;
-      border-radius: 50%; // Rotunjim colțurile pentru a obține un aspect circular
-      margin-right: 10px; // Adăugăm un spațiu mic între imagine și text
+      border-radius: 50%; 
+      margin-right: 10px; 
     }
   }
 }
 
-// Stilizare pentru mesajul de eroare
+
 .error-message {
   color: #e74c3c;
   text-align: center;

@@ -85,7 +85,7 @@ export class RecipeComponent {
 
 
   checkIfLiked(recipe: any): void {
-    console.log("Recipe object:", recipe); // Log the recipe object
+    console.log("Recipe object:", recipe); 
     const userId = this.authService.userId();
     const recipeId = recipe.id;
     const name = "spoonacular";

@@ -1,5 +1,5 @@
 .dropdown {
-    display: inline-block; /* sau inline */
+    display: inline-block; 
     position: relative;
   }
   
@@ -16,7 +16,7 @@
     display: block;
   }
   
-  /* Stilizare pentru butonul dropdown */
+
   .dropbtn {
     font-size: 16px;
     border: none;
@@ -32,7 +32,6 @@
     background-color: red;
   }
   
-  /* Stilizare pentru opțiunile dropdown-ului */
   .dropdown-content a {
     color: black;
     padding: 12px 16px;

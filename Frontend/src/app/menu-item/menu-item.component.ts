@@ -20,14 +20,14 @@ export class MenuItemComponent {
     }
     this.recipeService.searchMenuItem(this.query).subscribe(
       (response: any) => {
-        this.searchResult = response; // Sau ajustați după structura răspunsului
+        this.searchResult = response; 
         console.log("Search results:", this.searchResult);
-        this.errorMessage = ''; // Curățați mesajul de eroare dacă este prezent
+        this.errorMessage = ''; 
       },
       (error) => {
         console.error('Error:', error);
-        this.errorMessage = 'Error fetching menu items. Please try again.'; // Afișați mesajul de eroare utilizatorului
-        this.searchResult = []; // Curățați array-ul de rezultate de căutare
+        this.errorMessage = 'Error fetching menu items. Please try again.';
+        this.searchResult = [];
       }
     );
   }

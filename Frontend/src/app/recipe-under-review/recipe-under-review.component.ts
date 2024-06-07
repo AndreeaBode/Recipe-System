@@ -43,10 +43,8 @@ export class RecipeUnderReviewComponent implements OnInit {
   }
 
   deleteRecipe(recipeId: number): void {
-    // Facem cererea pentru a șterge rețeta folosind serviciul recipeService
     this.recipeUnderReviewService.deleteRecipe(recipeId)
       .subscribe(() => {
-        // Dacă ștergerea a fost realizată cu succes, reîncărcăm lista de rețete în așteptare
         this.loadRecipesUnderReview();
       });
   }
@@ -54,7 +52,6 @@ export class RecipeUnderReviewComponent implements OnInit {
   rejectRecipe(recipeId: number): void {
     this.recipeUnderReviewService.deleteRecipe(recipeId)
       .subscribe(() => {
-        // Dacă ștergerea a fost realizată cu succes, reîncărcăm lista de rețete în așteptare
         this.loadRecipesUnderReview();
       });
   }

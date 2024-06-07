@@ -36,11 +36,11 @@ public class ExtractedDTO {
         this.unitPerServing = extractedRecipe.getUnitPerServing();
     }
 
-    // Constructor fără parametri
+
     public ExtractedDTO() {
     }
 
-    // Constructor alternativ
+
     public ExtractedDTO(int id, String title, String image, List<Ingredient> ingredients, List<Step> instructions) {
         this.id = id;
         this.title = title;
@@ -49,7 +49,6 @@ public class ExtractedDTO {
         this.instructions = instructions;
     }
 
-    // Getteri și setteri pentru toate câmpurile
     public int getId() {
         return id;
     }

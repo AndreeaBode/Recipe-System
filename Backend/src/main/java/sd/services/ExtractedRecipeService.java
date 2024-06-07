@@ -47,7 +47,6 @@ public class ExtractedRecipeService {
 
     public ResponseEntity<String> extractRecipe(String url) {
         try {
-            // Check if recipe with the same title already exists
             String recipeTitle = getRecipeTitleFromSpoonacular(url);
             if (extractedRecipeRepository.existsByTitle(recipeTitle)) {
                 return ResponseEntity.status(400).body("A recipe with the same title already exists.");
@@ -95,7 +94,7 @@ public class ExtractedRecipeService {
                 }
             }
 
-            // Extract and set nutritional information
+
             JSONObject nutritionObject = jsonObject.getJSONObject("nutrition");
             JSONObject caloricBreakdownObject = nutritionObject.getJSONObject("caloricBreakdown");
             double percentProtein = caloricBreakdownObject.getDouble("percentProtein");
@@ -195,13 +194,11 @@ public class ExtractedRecipeService {
         if (extractedRecipeOptional.isPresent()) {
             ExtractedRecipe extractedRecipe = extractedRecipeOptional.get();
 
-            // Initialize collections
             extractedRecipe.getIngredients().size();
             extractedRecipe.getSteps().size();
             extractedRecipe.getDishTypes().size();
             extractedRecipe.getDiets().size();
 
-            // Access properties to force initialization
             extractedRecipe.getPercentProtein();
             extractedRecipe.getPercentFat();
             extractedRecipe.getPercentCarbs();

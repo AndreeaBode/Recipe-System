@@ -83,8 +83,8 @@
         }
       
       .button:hover {
-          background-color: #008CBA; /* Schimbă culoarea fundalului la hover */
-          color: white; /* Schimbă culoarea textului la hover */
+          background-color: #008CBA; 
+          color: white;
       }
       
         .heart {
@@ -136,21 +136,21 @@
   
 
     .commentBox {
-      border: 1px solid #ccc; /* Bordura pentru fiecare "box" de comentariu */
-      border-radius: 5px; /* Rotunjirea colțurilor */
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
       padding: 10px;
-      margin-bottom: 10px; /* Spațiul între fiecare "box" de comentariu */
+      margin-bottom: 10px; 
       margin-left:15%;
       margin-right: 15%;
   }
   
   .commentBox h4 {
-      font-size: 1.1rem; /* Dimensiunea username-ului */
-      margin-bottom: 5px; /* Spațiul între username și comentariu */
+      font-size: 1.1rem;
+      margin-bottom: 5px; 
   }
   
   .commentBox p {
-      margin-bottom: 0; /* Elimină spațiul de dedesubtul comentariului */
+      margin-bottom: 0; 
   }
   .comm1{
     margin-top: 50px;
@@ -167,34 +167,34 @@
     font-family: Lucida Console, sans-serif;
   }
   textarea {
-    width: 70%; /* Latimea textarea */
-    height: 40px; /* Înălțimea textarea */
-    padding: 10px; /* Padding pentru spațierea conținutului */
-    margin-bottom: 10px; /* Spațiu între textarea și buton */
-    border: 1px solid #ccc; /* Adaugă o bordură subțire */
-    border-radius: 5px; /* Rotunjirea colțurilor */
-    resize: vertical; /* Permite redimensionarea verticală a textarea */
-    margin-left: 15%; /* Ajustează marginea stângă pentru aliniere */
+    width: 70%; 
+    height: 40px; 
+    padding: 10px; 
+    margin-bottom: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    resize: vertical; 
+    margin-left: 15%;
 }
 textarea::placeholder {
-  font-size: 16px; /* Dimensiunea fontului pentru placeholder */
-  /* Alte stiluri CSS pentru placeholder */
+  font-size: 16px; 
+
 }
 
 button {
-    background-color: #4CAF50; /* Culoarea de fundal a butonului */
-    color: white; /* Culoarea textului */
-    padding: 10px 20px; /* Padding pentru spațierea conținutului */
-    border: none; /* Elimină bordura butonului */
-    border-radius: 5px; /* Rotunjirea colțurilor */
-    cursor: pointer; /* Cursor de mouse în formă de mână */
-    transition: background-color 0.3s ease; /* Tranzitie pentru hover */
-    display: block; /* Face ca butonul să apară ca un bloc */
-    margin: 0 auto; /* Ajustează marginea pentru a-l centra pe orizontală */
+    background-color: #4CAF50; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    display: block;
+    margin: 0 auto; 
 }
 
 button:hover {
-    background-color: #45a049; /* Culoarea de fundal a butonului la hover */
+    background-color: #45a049;
 }
 
   }
