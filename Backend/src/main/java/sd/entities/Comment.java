@@ -21,16 +21,15 @@ public class Comment {
     @Column(nullable = false)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "extracted_id")
     @JsonIgnore
     private ExtractedRecipe extractedRecipe;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "added_id")
     @JsonIgnore
     private AddedRecipe addedRecipe;
 
 
 }
-

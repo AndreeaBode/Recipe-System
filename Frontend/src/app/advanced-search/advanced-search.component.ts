@@ -49,8 +49,9 @@ export class AdvancedSearchComponent {
   
 
   showRecipeDetails(recipeId: number) {
-    this.router.navigate(['/advanced-detail', recipeId, 'advanced-detail']);
+    this.router.navigate(['/advanced-detail', recipeId]);
   }
+  
 
 
 

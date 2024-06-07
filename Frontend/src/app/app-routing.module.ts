@@ -16,6 +16,7 @@ import { AddedRecipeDetailComponent } from './add-recipe/added-recipe-detail/add
 import { DetailsComponent } from './details/details.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { RecipeUnderReviewComponent } from './recipe-under-review/recipe-under-review.component';
+import { SearchWordsComponent } from './search-words/search-words.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'add', component: AddRecipeComponent },
   { path: 'add-recipe-detail', component: AddedRecipeDetailComponent },
   { path: 'recipe-under-review', component: RecipeUnderReviewComponent },
+  { path: 'search-words', component: SearchWordsComponent },
   {
     path: 'details/:id/:sourcePage',
     component: DetailsComponent

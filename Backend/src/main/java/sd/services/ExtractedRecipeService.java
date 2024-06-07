@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import sd.dtos.ExtractedDTO;
@@ -46,6 +47,12 @@ public class ExtractedRecipeService {
 
     public ResponseEntity<String> extractRecipe(String url) {
         try {
+            // Check if recipe with the same title already exists
+            String recipeTitle = getRecipeTitleFromSpoonacular(url);
+            if (extractedRecipeRepository.existsByTitle(recipeTitle)) {
+                return ResponseEntity.status(400).body("A recipe with the same title already exists.");
+            }
+
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("https://api.spoonacular.com/recipes/extract")
                     .queryParam("url", url)
                     .queryParam("forceExtraction", true)
@@ -66,7 +73,6 @@ public class ExtractedRecipeService {
             System.out.println(jsonObject);
 
             JSONArray extendedIngredientsArray = jsonObject.getJSONArray("extendedIngredients");
-
             List<String> originalIngredientsList = new ArrayList<>();
 
             for (int i = 0; i < extendedIngredientsArray.length(); i++) {
@@ -76,8 +82,6 @@ public class ExtractedRecipeService {
             }
 
             System.out.println(originalIngredientsList);
-
-            //processExtractedRecipe(extractedRecipe);
 
             JSONArray analyzedInstructionsArray = jsonObject.getJSONArray("analyzedInstructions");
             List<String> instructionsList = new ArrayList<>();
@@ -91,7 +95,30 @@ public class ExtractedRecipeService {
                 }
             }
 
-            saveExtractedRecipe(title, image, originalIngredientsList, instructionsList);
+            // Extract and set nutritional information
+            JSONObject nutritionObject = jsonObject.getJSONObject("nutrition");
+            JSONObject caloricBreakdownObject = nutritionObject.getJSONObject("caloricBreakdown");
+            double percentProtein = caloricBreakdownObject.getDouble("percentProtein");
+            double percentFat = caloricBreakdownObject.getDouble("percentFat");
+            double percentCarbs = caloricBreakdownObject.getDouble("percentCarbs");
+
+            JSONObject weightPerServingObject = nutritionObject.getJSONObject("weightPerServing");
+            double weightPerServing = weightPerServingObject.getDouble("amount");
+            String unitPerServing = weightPerServingObject.getString("unit");
+
+            JSONArray dishTypesArray = jsonObject.getJSONArray("dishTypes");
+            List<String> dishTypes = new ArrayList<>();
+            for (int i = 0; i < dishTypesArray.length(); i++) {
+                dishTypes.add(dishTypesArray.getString(i));
+            }
+
+            JSONArray dietsArray = jsonObject.getJSONArray("diets");
+            List<String> diets = new ArrayList<>();
+            for (int i = 0; i < dietsArray.length(); i++) {
+                diets.add(dietsArray.getString(i));
+            }
+
+            saveExtractedRecipe(title, image, originalIngredientsList, instructionsList, percentProtein, percentFat, percentCarbs, weightPerServing, unitPerServing, dishTypes, diets);
 
             return responseEntity;
         } catch (Exception e) {
@@ -100,11 +127,18 @@ public class ExtractedRecipeService {
         }
     }
 
-    public void saveExtractedRecipe(String title, String image, List<String> originalIngredientsList, List<String> instructionsList) {
+    public void saveExtractedRecipe(String title, String image, List<String> originalIngredientsList, List<String> instructionsList, double percentProtein, double percentFat, double percentCarbs, double weightPerServing, String unitPerServing, List<String> dishTypes, List<String> diets) {
         try {
             ExtractedRecipe extractedRecipe = new ExtractedRecipe();
             extractedRecipe.setTitle(title);
             extractedRecipe.setImage(image);
+            extractedRecipe.setPercentProtein(percentProtein);
+            extractedRecipe.setPercentFat(percentFat);
+            extractedRecipe.setPercentCarbs(percentCarbs);
+            extractedRecipe.setWeightPerServing(weightPerServing);
+            extractedRecipe.setUnitPerServing(unitPerServing);
+            extractedRecipe.setDishTypes(dishTypes);
+            extractedRecipe.setDiets(diets);
 
             extractedRecipe = extractedRecipeRepository.save(extractedRecipe);
 
@@ -123,7 +157,7 @@ public class ExtractedRecipeService {
             }
 
             extractedRecipeRepository.save(extractedRecipe);
-            newsletterService.sendEmail(extractedRecipe.getTitle());
+            //newsletterService.sendEmail(extractedRecipe.getTitle());
 
             extractedRecipe.setIngredients(ingredientRepository.findAllByRecipe(extractedRecipe));
             extractedRecipe.setSteps(stepRepository.findAllByRecipe(extractedRecipe));
@@ -133,12 +167,48 @@ public class ExtractedRecipeService {
         }
     }
 
+
+
+    private String getRecipeTitleFromSpoonacular(String url) {
+        // Call Spoonacular API to get the title
+        try {
+            UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("https://api.spoonacular.com/recipes/extract")
+                    .queryParam("url", url)
+                    .queryParam("apiKey", spoonacularApiKey);
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
+
+            String responseBody = responseEntity.getBody();
+            JSONObject jsonObject = new JSONObject(responseBody);
+
+            return jsonObject.getString("title");
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching recipe title: " + e.getMessage());
+        }
+    }
+
+
+    @Transactional
     public ExtractedDTO getDetailDisghen(int id) {
         Optional<ExtractedRecipe> extractedRecipeOptional = extractedRecipeRepository.findById(id);
         if (extractedRecipeOptional.isPresent()) {
             ExtractedRecipe extractedRecipe = extractedRecipeOptional.get();
+
+            // Initialize collections
             extractedRecipe.getIngredients().size();
             extractedRecipe.getSteps().size();
+            extractedRecipe.getDishTypes().size();
+            extractedRecipe.getDiets().size();
+
+            // Access properties to force initialization
+            extractedRecipe.getPercentProtein();
+            extractedRecipe.getPercentFat();
+            extractedRecipe.getPercentCarbs();
+            extractedRecipe.getWeightPerServing();
+            extractedRecipe.getUnitPerServing();
+
+            System.out.println("Extracted " + extractedRecipe);
             return new ExtractedDTO(extractedRecipe);
         } else {
             throw new RuntimeException("Recipe not found with id: " + id);

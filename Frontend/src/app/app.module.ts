@@ -33,6 +33,7 @@ import { DropdownMenuComponent } from './dropdown-menu/dropdown-menu.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { RecipeUnderReviewComponent } from './recipe-under-review/recipe-under-review.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SearchWordsComponent } from './search-words/search-words.component';
 
 @NgModule({
   imports: [
@@ -78,6 +79,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FavoriteComponent,
     RecipeUnderReviewComponent,
     NavbarComponent,
+    SearchWordsComponent,
 
   ],
   providers: [

@@ -2,91 +2,90 @@
   padding-top:50px;
   padding-bottom:50px;
 }
+
 .a {
   font-family: Arial, sans-serif;
   font-size:16px;
   max-width: 800px;
   margin: 0 auto;
-  
-  h1 {
-    color: #333;
-    text-align: center;
-  }
-  
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  
-  input[type="text"],
-  input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 30px;
-    margin-bottom: 60px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 100px;
-    
-    &:hover {
-      background-color: #0056b3;
-    }
-  }
-  
-  .recipe-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-top: 20px;
+}
 
+h1 {
+  color: #333;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.recipe-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  width: 100%; 
+}
 
 .recipe-item {
-    flex-basis: calc(33.33% - 20px); /* Ajustăm flex-basis pentru a ocupa aproximativ 33.33% din lățime */
-    margin-bottom: 20px;
-    box-sizing: border-box; 
-  }
-  
-  .image-container {
-      position: relative;
-  }
-  
-  .image-container h3 {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      color: #fff;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 5px 10px;
-      border-top-left-radius: 5px;
-  }
-  
-  .image-container .heart {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 24px;
-      color: rgb(34, 32, 32);
-      cursor: pointer;
-      transition: color 0.3s ease;
-  }
-  
-  .image-container .heart.full {
-      color: #e74c3c;
-  }
-  
-  }
+  flex-basis: calc(25% - 10px); /* Ajustăm flex-basis pentru a ocupa aproximativ 25% din lățime */
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.image-container {
+  position: relative;
+}
+
+.image-container h3 {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 10px;
+  border-top-left-radius: 5px;
+}
+
+.image-container .heart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: rgb(34, 32, 32);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.image-container .heart.full {
+  color: #e74c3c;
 }

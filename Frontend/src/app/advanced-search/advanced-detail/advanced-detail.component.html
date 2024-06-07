@@ -1,56 +1,66 @@
-<div *ngIf="recipe">
-    <h1>{{ recipe.title }}</h1>
-    <img [src]="recipe.image" alt="{{ recipe.title }}" width="300">
-    <p><b>Ready in minutes:</b> {{ recipe.readyInMinutes }}</p>
-    <p><b>Servings:</b> {{ recipe.servings }}</p>
-    <p><b>Summary:</b> {{ recipe.summary }}</p>
-    <h2>Ingredients:</h2>
-    <ul>
-      <li *ngFor="let ingredient of recipe.extendedIngredients">
-        {{ ingredient.original }}
-      </li>
-    </ul>
-    <h2>Instructions:</h2>
-    <ol>
-      <li *ngFor="let step of recipe.analyzedInstructions[0]?.steps">
-        {{ step.step }}
-      </li>
-    </ol>
-    <p><b>Source:</b> <a [href]="recipe.sourceUrl">{{ recipe.sourceName }}</a></p>
-  </div>
+<div *ngIf="recipe" class="recipe-container">
+  <h1 class="recipe-title">{{ recipe.title }}</h1>
   
-
-  <div *ngIf="recipe && nutritionData">
-    <h2>Informații Nutriționale</h2>
-    <div>
-      <p><strong>Calories:</strong> {{ nutritionData.nutrients[0].amount }} {{ nutritionData.nutrients[0].unit }}</p>
-      <p><strong>Carbs:</strong> {{ nutritionData.nutrients[1].amount }} {{ nutritionData.nutrients[1].unit }}</p>
-      <p><strong>Fat:</strong> {{ nutritionData.nutrients[2].amount }} {{ nutritionData.nutrients[2].unit }}</p>
-      <p><strong>Protein:</strong> {{ nutritionData.nutrients[3].amount }} {{ nutritionData.nutrients[3].unit }}</p>
-
+  <div class="recipe-content">
+    <div class="recipe-image">
+      <img [src]="recipe.image" alt="{{ recipe.title }}">
     </div>
-    <div>
 
-        <h3>Good Nutrients:</h3>
-        <ul>
-          <li *ngFor="let nutrient of nutritionData.good">
-            {{ nutrient.title }}: {{ nutrient.amount }}
-            <br>
-            Percent of daily needs: {{ nutrient.percentOfDailyNeeds }}%
-          </li>
-        </ul>
-<br>
+    <div class="recipe-summary">
+      <div class="summary"> {{ recipe.summary }}</div>
+    </div>
+  </div>
 
-        <h3>Bad Nutrients:</h3>
-        <ul>
-          <li *ngFor="let nutrient of nutritionData.bad">
-            {{ nutrient.title }}: {{ nutrient.amount }}
-            <br>
-            Percent of daily needs: {{ nutrient.percentOfDailyNeeds }}%
-          </li>
-        </ul>
-       
+  <div class="recipe-details-container">
+    <div class="recipe-details">
+      <div class="text">
+      <p><b>Ready in minutes:</b> {{ recipe.readyInMinutes }}</p>
+      <p><b>Servings:</b> {{ recipe.servings }}</p>
+</div>
+      <div class="ingredients-instructions">
+        <div class="ingredients">
+          <div class="title-ing">Ingredients:</div>
+          <div class="box">
+            <ul>
+              <li *ngFor="let ingredient of recipe.extendedIngredients">
+                {{ ingredient.original }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="instructions">
+          <div class="title-ing">Instructions:</div>
+          <div class="box">
+            <ol>
+              <li *ngFor="let step of recipe.analyzedInstructions[0]?.steps">
+                {{ step.step }}
+              </li>
+            </ol>
+          </div>
+        </div>
       </div>
-      
-      
-      
+    </div>
+  </div>
+
+  <div *ngIf="recipe && nutritionData" class="nutrition-info">
+    <div class="nutrient-list">
+      <h3>Good Nutrients:</h3>
+      <ul>
+        <li *ngFor="let nutrient of nutritionData.good">
+          {{ nutrient.title }}: {{ nutrient.amount }} <br>
+          <div class = "percent" >Percent of daily needs: {{ nutrient.percentOfDailyNeeds }}%</div>
+        </li>
+      </ul>
+    </div>
+    <div class="nutrient-list">
+      <h3>Bad Nutrients:</h3>
+      <ul>
+        <li *ngFor="let nutrient of nutritionData.bad">
+          {{ nutrient.title }}: {{ nutrient.amount }} <br>
+          <div class = "percent" >Percent of daily needs: {{ nutrient.percentOfDailyNeeds }}%</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

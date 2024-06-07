@@ -22,6 +22,7 @@ public class CommentController {
         this.commentService = commentService;
     }
 
+    @Transactional
     @PostMapping("/{recipeId}/{userId}/{username}/{additionalPath}/addComment")
     public ResponseEntity<Comment> addComment(@PathVariable("recipeId") int recipeId,
                                               @PathVariable("userId") int userId,
@@ -31,6 +32,7 @@ public class CommentController {
         return commentService.addComment(recipeId, userId, username,additionalPath, comment);
     }
 
+    @Transactional
     @GetMapping("getComment/{username}/{recipeId}/{additionalPath}")
     public ResponseEntity<List<Comment>> getCommentsByRecipeId(@PathVariable String username, @PathVariable int recipeId, @PathVariable("additionalPath") String additionalPath) {
         List<Comment> comments = commentService.getCommentsByRecipeId(username,recipeId , additionalPath);

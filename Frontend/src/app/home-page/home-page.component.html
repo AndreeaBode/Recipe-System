@@ -8,14 +8,37 @@
   </div>
 </div>
 
+
 <div class="recipes-menu">
   <div *ngFor="let recipe of recipes" class="recipe-card">
-    <a routerLink="/recipe-detail/{{recipe.id}}">
+    <a routerLink="/details/{{recipe.id}}/dishgen" class="recipe-link">
       <img [src]="recipe.image" alt="Recipe Image" class="recipe-image" />
       <span class="image-title">{{ recipe.title }}</span>
     </a>
   </div>
 </div>
+
+<div class="word-cloud-container">
+  <div class="dish-types">
+    <span *ngFor="let word of dishTypes; let i = index" 
+          (click)="onWordDishTypesClick(word)" 
+          class="clickable-word" 
+          [ngClass]="{'big-word': i % 2 === 0, 'small-word': i % 2 !== 0}">
+      {{ word }}
+    </span>
+  </div>
+  <div class="diets">
+    <span *ngFor="let word of diets; let i = index" 
+          (click)="onWordDietsClick(word)" 
+          class="clickable-word" 
+          [ngClass]="{'big-word': i % 2 === 0, 'small-word': i % 2 !== 0}">
+      {{ word }}
+    </span>
+  </div>
+</div>
+
+
+
 
 <div class="main">
   <div class="container">

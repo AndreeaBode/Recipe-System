@@ -23,7 +23,6 @@ export class AdvancedDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.recipeId = +params['id'];
       
-      // Apelăm metoda pentru a obține detaliile rețetei
       this.recipeService.getRecipeInformation(this.recipeId, false).subscribe(
         (response) => {
           this.recipe = response;
@@ -34,7 +33,6 @@ export class AdvancedDetailComponent implements OnInit {
         }
       );
 
-      // Apelăm metoda pentru a obține widget-ul de nutriție
       this.recipeService.getRecipeNutritionWidget(this.recipeId).subscribe(
         (response) => {
           this.nutritionData = response;

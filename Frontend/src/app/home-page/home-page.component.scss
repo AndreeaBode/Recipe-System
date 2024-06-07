@@ -39,14 +39,21 @@
 .recipes-menu {
   display: flex;
   background-color: black;
-  overflow-x: auto;
+  overflow-x: scroll;
+  overflow-y: hidden; /* Ascunde bara de derulare verticală */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  padding-bottom: 60px;
+}
+
+.recipes-menu::-webkit-scrollbar {
+  width: 0; /* Ascunde bara de derulare orizontală pentru Chrome, Safari și Opera */
 }
 
 .recipe-card {
   position: relative;
   width: 350px;
-  margin-left:30px;
-
+  margin-left: 30px;
 }
 
 .recipe-link {
@@ -74,8 +81,6 @@
   padding: 5px 0;
   box-sizing: border-box;
 }
-
-
 
 .content {
   width: 90%;
@@ -254,3 +259,39 @@ button:hover {
 margin-bottom: 50px;
 
 }
+.word-cloud-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  //background-color: #2b2b2b; 
+  background-color: black;
+}
+
+.dish-types, .diets {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 45%; 
+}
+
+.dish-types {
+  justify-content: flex-start;
+}
+
+.diets {
+  justify-content: flex-end;
+}
+
+.clickable-word {
+  margin: 5px;
+  cursor: pointer;
+  color: #b18aff; /* Adjust text color if needed */
+}
+
+.big-word {
+  font-size: 2em; /* Larger size for big words */
+}
+
+.small-word {
+  font-size: 1em; /* Smaller size for small words */
+}
+

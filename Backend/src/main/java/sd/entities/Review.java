@@ -26,6 +26,7 @@ public class Review {
     @JsonIgnore
     private ExtractedRecipe extractedRecipe;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "added_id")
     @JsonIgnore
@@ -33,4 +34,3 @@ public class Review {
 
 
 }
-

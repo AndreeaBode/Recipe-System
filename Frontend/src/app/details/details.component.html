@@ -11,45 +11,38 @@
                 <div class="average-rating" *ngIf="reviews">
                     <p>{{ reviews.length }} Ratings ({{ calculateAverageRating() }}/5)</p>
                 </div>
-                
-                <div class="rating" *ngIf="!isReviewed" class="update" >
+
+                <div class="rating" *ngIf="!isReviewed" class="update">
                     <span class="star" (click)="setRating(1)" [class.filled]="newReview.rating >= 1">&#9733;</span>
                     <span class="star" (click)="setRating(2)" [class.filled]="newReview.rating >= 2">&#9733;</span>
                     <span class="star" (click)="setRating(3)" [class.filled]="newReview.rating >= 3">&#9733;</span>
                     <span class="star" (click)="setRating(4)" [class.filled]="newReview.rating >= 4">&#9733;</span>
                     <span class="star" (click)="setRating(5)" [class.filled]="newReview.rating >= 5">&#9733;</span>
                 </div>
-                
+
                 <div *ngIf="isReviewed" class="update">
                     <div *ngFor="let review of reviewsUpdate" class="rating">
-                      <span 
-                        *ngFor="let filled of getStarArray(review.rating); let i = index" 
-                        class="star" 
-                        [class.filled]="filled" 
-                        (click)="updateRating(i + 1)">
-                        &#9733;
-                      </span>
+                        <span *ngFor="let filled of getStarArray(review.rating); let i = index" class="star"
+                            [class.filled]="filled" (click)="updateRating(i + 1)">
+                            &#9733;
+                        </span>
                     </div>
-                  </div>
-                  
-                  
-                <button *ngIf="!isReviewed" (click)="addReview()" class = "button">Add Review</button>
-                <button *ngIf="isReviewed" (click)="updateReview()" class = "button">Update Review</button>
-                
+                </div>
 
-                
+                <button *ngIf="!isReviewed" (click)="addReview()" class="button">Add Review</button>
+                <button *ngIf="isReviewed" (click)="updateReview()" class="button">Update Review</button>
             </div>
 
             <div class="instructions-ingredients">
                 <div class="ingredients">
-                    <h3 class = "ing">Ingredients</h3>
+                    <h3 class="ing">Ingredients</h3>
                     <ul>
                         <li *ngFor="let ingredient of recipe.ingredients">{{ ingredient.ingredient }}</li>
                     </ul>
                 </div>
 
                 <div class="instructions">
-                    <h3 class = "ing">Instructions</h3>
+                    <h3 class="ing">Instructions</h3>
                     <ol>
                         <li *ngFor="let instruction of recipe.instructions">{{ instruction.instruction }}</li>
                     </ol>
@@ -57,7 +50,29 @@
             </div>
         </div>
 
-
+        <div class="additional-info" *ngIf="name === 'dishgen'">
+            <div class="left-info">
+                <p *ngIf="recipeDetails.dishTypes && recipeDetails.dishTypes.length > 0">
+                    <b>Dish Types:</b> {{ recipeDetails.dishTypes.join(', ') }}
+                </p>
+                <p *ngIf="recipeDetails.diets && recipeDetails.diets.length > 0">
+                    <b>Diets:</b> {{ recipeDetails.diets.join(', ') }}
+                </p>
+            </div>
+            <div class="right-info">
+                <p *ngIf="recipeDetails.percentProtein">
+                    <b>Protein:</b> {{ recipeDetails.percentProtein }}%
+                </p>
+                <p *ngIf="recipeDetails.percentFat">
+                    <b>Fat:</b> {{ recipeDetails.percentFat }}%
+                </p>
+                <p *ngIf="recipeDetails.percentCarbs">
+                    <b>Carbs:</b> {{ recipeDetails.percentCarbs }}%
+                </p>
+            </div>
+        </div>
+        
+        
 
         <div *ngIf="name === 'spoonacular'">
             <p><b>Ready in minutes:</b> {{ recipe.readyInMinutes }}</p>
@@ -66,24 +81,21 @@
         </div>
 
         <div class="reviewAndComment">
-
             <div class="displayRatings">
-                
                 <div class="comments">
-                    <h3 class = "comm2">Comments</h3>
+                    <h3 class="comm2">Comments</h3>
                     <div *ngIf="comments && comments.length > 0">
                         <div *ngFor="let comment of comments" class="commentBox">
                             <h4>{{ comment.username }}</h4>
                             <p>{{ comment.content }}</p>
                         </div>
-                        
                     </div>
                     <div *ngIf="!comments || comments.length === 0" class="comm1">
                         <p>No comments yet. Be the first to comment!</p>
                     </div>
                 </div>
-            
-                <h3 class = "comm2">Add Comment</h3>
+
+                <h3 class="comm2">Add Comment</h3>
                 <textarea [(ngModel)]="newComment" placeholder="Enter your comment"></textarea>
                 <button (click)="addComment()">Add Comment</button>
 

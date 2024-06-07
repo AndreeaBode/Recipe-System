@@ -1,5 +1,5 @@
 .background {
-  background-color: oklch(0.253267 0.015896 252.418);
+  background: linear-gradient(135deg, #2c2b2d, #000000);
 }
 .recipes-title {
   padding-top:50px;
@@ -37,23 +37,21 @@
 
 .recipe-image {
   width: 300px;
-  height: auto;
+  height: 260px;
   display: block;
+  border-radius:5px;
+  
 }
 
 .image-title {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 300px; 
-  color: white;
+  bottom: 10px;
+  left: 10px;
+  color: #fff;
   font-size: 18px;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 5px 10px;
-  box-sizing: border-box;
-  overflow: hidden; 
-  white-space: nowrap; 
-  text-overflow: ellipsis;
+  border-radius: 5px;
 }
 
 .heart {

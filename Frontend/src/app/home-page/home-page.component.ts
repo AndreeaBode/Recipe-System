@@ -6,14 +6,14 @@ import { takeUntil } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-
 
 export class HomePageComponent {
   email: string = '';
@@ -24,9 +24,12 @@ export class HomePageComponent {
   contactEmail: string = '';
   contactMessage: string = '';
   recipes: any[] = [];
+  dishTypes: string[] = ['Dessert', 'Soup', 'Antipasti', 'starter', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre', 'lunch', 'main course', 'main dish', 'dinner', 'side dish'];
+  diets: string[] = ['Gluten free', 'dairy free', 'paleolithic', 'lacto ovo vegetarian', 'primal', 'fodmap friendly', 'vegan'];
+
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private recipeService: RecipeService, private toastr: ToastrService) { }
+  constructor(private recipeService: RecipeService, private toastr: ToastrService, private http: HttpClient, private router: Router) { }
 
   capitalizeFirstLetter(text: string): string {
     return text.charAt(0).toUpperCase() + text.slice(1);
@@ -36,18 +39,16 @@ export class HomePageComponent {
     this.newsletterVisible = true;
   }
 
-
   showContact() {
-   // this.showNewsletterForm = false;
     this.showContactForm = true;
   }
+
   subscribeEmail(): void {
-    // Verificare validitate adresa de email
     if (!this.validateEmail(this.email)) {
       this.toastr.error('Please enter a valid email address!', 'Error');
       return;
     }
-  
+
     this.recipeService.email(this.email)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -72,12 +73,11 @@ export class HomePageComponent {
         }
       );
   }
-  
 
   sendContactMessage() {
     console.log(`Name: ${this.contactName}, Email: ${this.contactEmail}, Message: ${this.contactMessage}`);
     this.toastr.success('Your message has been sent successfully!', 'Success');
-    this.contactName = ''; 
+    this.contactName = '';
     this.contactEmail = '';
     this.contactMessage = '';
   }
@@ -94,13 +94,10 @@ export class HomePageComponent {
     );
   }
 
-  // Funcție pentru validare adresa de email
   validateEmail(email: string): boolean {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   }
-
-
 
   ngOnInit(): void {
     this.getTopRecipes();
@@ -118,4 +115,27 @@ export class HomePageComponent {
       )
       .subscribe(recipes => this.recipes = recipes.slice(0, 20));
   }
+
+  onWordDishTypesClick(word: string) {
+    this.recipeService.searchByDishType(word).subscribe(recipes => {
+      if (recipes.length === 0) {
+        this.toastr.error('No recipes found for this dish type.', 'Error');
+      } else {
+        this.recipeService.setCachedResults(recipes);
+        this.router.navigate(['/search-words']);
+      }
+    });
+  }
+  
+  onWordDietsClick(word: string) {
+    this.recipeService.searchByDiet(word).subscribe(recipes => {
+      if (recipes.length === 0) { 
+        this.toastr.error('No recipes found for this diet.', 'Error');
+      } else {
+        this.recipeService.setCachedResults(recipes);
+        this.router.navigate(['/search-words']);
+      }
+    });
+  }
+  
 }

@@ -13,6 +13,7 @@ import { Recipe } from '../models/recipe';
 export class RecipeService {
   private backendUrl = 'http://localhost:8080'; 
   private backendUrl2 = 'http://localhost:8080/export'; 
+  private cachedResults: any[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -175,5 +176,23 @@ email(email: string) {
     return this.http.get<string>(this.backendUrl2, { responseType: 'text' as 'json' });
   }
   
+
+  searchByDishType(dishType: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.backendUrl}/searchByDishType?dishType=${dishType}`);
+  }
   
+  searchByDiet(diet: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.backendUrl}/searchByDiet?diet=${diet}`);
+  }
+  
+  
+  getCachedResults(): any[] {
+    console.log("GET " , this.cachedResults);
+    return this.cachedResults;
+  }
+
+  setCachedResults(results: any[]): void {
+    console.log("SET " , results);
+    this.cachedResults = results;
+  }
 }

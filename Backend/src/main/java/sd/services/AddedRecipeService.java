@@ -1,6 +1,8 @@
 package sd.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sd.dtos.AddedRecipeDTO;
 import sd.dtos.builders.AddedRecipeBuilder;
@@ -47,8 +49,12 @@ public class AddedRecipeService {
         }
     }
 
-    private void saveRecipeUnderReview(String title, String image, List<RecipeUnderReviewIngredient> ing, List<RecipeUnderReviewStep> instructions) {
+    private ResponseEntity<String> saveRecipeUnderReview(String title, String image, List<RecipeUnderReviewIngredient> ing, List<RecipeUnderReviewStep> instructions) {
         try {
+                if (addedRecipeRepository.existsByTitle(title)) {
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body("A recipe with the same title already exists.");
+                }
+
             RecipeUnderReview recipeUnderReview = new RecipeUnderReview();
             recipeUnderReview.setTitle(title);
             recipeUnderReview.setImage(image);
@@ -84,6 +90,8 @@ public class AddedRecipeService {
             recipeUnderReview.setIngredients(ingredients);
             recipeUnderReview.setInstructions(step);
             recipeUnderReviewRepository.save(recipeUnderReview);
+            return ResponseEntity.ok("Recipe saved successfully");
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error saving recipe: " + e.getMessage());

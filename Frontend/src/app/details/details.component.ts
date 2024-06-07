@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from 'src/app/services/recipe.service';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
@@ -10,23 +10,22 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class DetailsComponent implements OnInit {
   recipe: any;
+  recipeDetails: any = {};
   id: number = 0;
   isLoved: boolean = false;
   loading: boolean = false;
-  recippeId!: number;
-  name: string = "";
-  comments: any[] = []; 
-  newComment: string = ""; 
+  name: string = '';
+  comments: any[] = [];
+  newComment: string = '';
   reviewsUpdate: any[] = [];
-  reviews: any[] = []; 
-  newReview: any = {rating: 0 }; 
+  reviews: any[] = [];
+  newReview: any = { rating: 0 };
   isReviewed: boolean = false;
-
 
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private authService: AuthService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -34,14 +33,11 @@ export class DetailsComponent implements OnInit {
     if (recipeId) {
       const sourcePage = this.route.snapshot.paramMap.get('sourcePage');
 
-
       this.name = sourcePage ?? '';
 
-      
       this.loading = true;
 
       if (sourcePage === 'addedRecipe') {
-
         this.recipeService.getAddeddRecipeDetails(recipeId).subscribe(
           (recipe: any) => {
             this.recipe = recipe;
@@ -55,8 +51,8 @@ export class DetailsComponent implements OnInit {
       } else if (sourcePage === 'dishgen') {
         this.recipeService.getRecipeDishgenDetails(recipeId).subscribe(
           (recipe: any) => {
-           
             this.recipe = recipe;
+            this.recipeDetails = recipe;
             this.loading = false;
           },
           (error: any) => {
@@ -68,7 +64,6 @@ export class DetailsComponent implements OnInit {
         this.recipeService.getRecipeInformation(recipeId, false).subscribe(
           (response) => {
             this.recipe = response;
-            
           },
           (error) => {
             console.error('Eroare la obținerea detaliilor rețetei:', error);
@@ -92,8 +87,6 @@ export class DetailsComponent implements OnInit {
 
     const recipeId = recipe.id;
     const name = this.name;
-
-    
 
     recipe.isLoved = !recipe.isLoved;
 
@@ -126,18 +119,14 @@ export class DetailsComponent implements OnInit {
     );
   }
 
-
   getComments() {
     const idParam = this.route.snapshot.paramMap.get('id');
-    const id = idParam ? +idParam : 0; 
+    const id = idParam ? +idParam : 0;
     const urlParts = this.route.snapshot.url.map(segment => segment.path);
     const username = this.authService.username();
-    
-  
-    let additionalPath = '';
-      
-    if (urlParts.length > 1) {
 
+    let additionalPath = '';
+    if (urlParts.length > 1) {
       additionalPath = urlParts[2];
     }
     if (id) {
@@ -153,43 +142,34 @@ export class DetailsComponent implements OnInit {
     const userId = this.authService.userId();
     const urlParts = this.route.snapshot.url.map(segment => segment.path);
     const username = this.authService.username();
-   
 
-   let additionalPath = '';
-    
+    let additionalPath = '';
     if (urlParts.length > 1) {
-      
       additionalPath = urlParts[2];
     }
-    
 
     if (id) {
-      this.recipeService.addCommentToRecipe(id, userId,username, { content: this.newComment }, additionalPath)?.subscribe(comment => {
+      this.recipeService.addCommentToRecipe(id, userId, username, { content: this.newComment }, additionalPath)?.subscribe(comment => {
         this.comments.push(comment);
         this.newComment = '';
         location.reload();
-    });
-    
+      });
     }
   }
 
   getReviews(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     const id = idParam ? +idParam : 0;
-  
+
     const userId = this.authService.userId();
     const urlParts = this.route.snapshot.url.map(segment => segment.path);
     const username = this.authService.username();
 
-  
     let additionalPath = '';
-      
     if (urlParts.length > 1) {
       additionalPath = urlParts[2];
     }
-      
 
-  
     if (id) {
       this.recipeService.getReviewsByRecipeId(username, id, additionalPath)?.subscribe(reviews => {
         this.reviews = reviews;
@@ -204,21 +184,16 @@ export class DetailsComponent implements OnInit {
     const userId = this.authService.userId();
     const urlParts = this.route.snapshot.url.map(segment => segment.path);
     const username = this.authService.username();
-  
 
-   let additionalPath = '';
-    
+    let additionalPath = '';
     if (urlParts.length > 1) {
-
       additionalPath = urlParts[2];
     }
-    
 
     if (id) {
-      
-      this.recipeService.addReviewToRecipe(id, this.newReview, userId, username, additionalPath )?.subscribe(review => {
+      this.recipeService.addReviewToRecipe(id, this.newReview, userId, username, additionalPath)?.subscribe(review => {
         this.reviews.push(review);
-        this.newReview = {rating: 0 }; 
+        this.newReview = { rating: 0 };
         location.reload();
       });
     }
@@ -228,78 +203,67 @@ export class DetailsComponent implements OnInit {
     this.newReview.rating = rating;
   }
 
-
-getStarArray(rating: number): boolean[] {
+  getStarArray(rating: number): boolean[] {
     const starArray: boolean[] = [];
     for (let i = 0; i < 5; i++) {
-        starArray.push(i < rating);
+      starArray.push(i < rating);
     }
     return starArray;
-}
+  }
 
-
-calculateAverageRating(): string {
-  if (!this.reviews || this.reviews.length === 0) {
+  calculateAverageRating(): string {
+    if (!this.reviews || this.reviews.length === 0) {
       return 'N/A';
+    }
+
+    const ratings = this.reviews
+      .filter(review => review !== null)
+      .map(review => parseInt(review.rating, 10));
+
+    const allRatingsValid = ratings.every(rating => !isNaN(rating) && Number.isInteger(rating));
+
+    if (!allRatingsValid) {
+      return 'N/A';
+    }
+
+    const sum = ratings.reduce((acc, rating) => acc + rating, 0);
+
+    const average = sum / ratings.length;
+
+    return average.toFixed(2);
   }
 
-  const ratings = this.reviews
-    .filter(review => review !== null) 
-    .map(review => parseInt(review.rating, 10));
+  addOrUpdateReview() {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const id = idParam ? +idParam : 0;
 
-  const allRatingsValid = ratings.every(rating => !isNaN(rating) && Number.isInteger(rating));
+    const userId = this.authService.userId();
+    const urlParts = this.route.snapshot.url.map(segment => segment.path);
+    const username = this.authService.username();
 
-  if (!allRatingsValid) {
-      return 'N/A'; 
+    let additionalPath = '';
+    if (urlParts.length > 1) {
+      additionalPath = urlParts[2];
+    }
+
+    if (id) {
+      this.recipeService.checkReview(userId, id, additionalPath)?.subscribe(response => {
+        if (response) {
+          this.isReviewed = true;
+          this.reviewsUpdate = [response];
+        } else {
+          this.isReviewed = false;
+        }
+      });
+    }
   }
 
-  const sum = ratings.reduce((acc, rating) => acc + rating, 0);
-
-  const average = sum / ratings.length;
-
-  return average.toFixed(2); 
-}
-
-
-
-addOrUpdateReview() {
-  const idParam = this.route.snapshot.paramMap.get('id');
-  const id = idParam ? +idParam : 0;
-
-  const userId = this.authService.userId();
-  const urlParts = this.route.snapshot.url.map(segment => segment.path);
-  const username = this.authService.username();
-
-
-
-  let additionalPath = '';
-
-  if (urlParts.length > 1) {
-    additionalPath = urlParts[2];
+  updateRating(newRating: number) {
+    if (this.reviewsUpdate.length > 0) {
+      this.reviewsUpdate[0].rating = newRating;
+      this.newReview.rating = newRating.toString();
+    }
   }
-
-  if (id) {
-
-    this.recipeService.checkReview(userId, id, additionalPath)?.subscribe(response => {
-      if (response) {
-        this.isReviewed = true;
-        this.reviewsUpdate = [response];
-      } else {
-        
-      }
-    });
-  }
-  console.log("gggg", this.isReviewed);
-}
-
-updateRating(newRating: number) {
-  if (this.reviewsUpdate.length > 0) {
-    
-    this.reviewsUpdate[0].rating = newRating;
-    this.newReview.rating = newRating.toString();
-
-  } 
-}
 
 updateReview(): void {
   const idParam = this.route.snapshot.paramMap.get('id');

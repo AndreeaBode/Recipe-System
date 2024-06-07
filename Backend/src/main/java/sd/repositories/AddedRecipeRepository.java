@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AddedRecipeRepository extends JpaRepository<AddedRecipe, Integer> {
-
+    boolean existsByTitle(String title);
     List<AddedRecipe> findAll();
 
     @EntityGraph(attributePaths = {"ingredients", "steps"})
