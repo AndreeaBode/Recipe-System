@@ -32,6 +32,7 @@ public class ExtractedRecipe {
     @OneToMany(mappedBy = "extractedRecipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Review> reviews = new ArrayList<>();
 
+
     @Column(nullable = false)
     private double percentProtein;
 

@@ -21,7 +21,7 @@ export class RecipeService {
     return this.http.get<any>(`${this.backendUrl}/searchFood?query=${query}`);
   }
 
-  searchFoodAdvanced(options: SearchFoodOptions): Observable<any> {
+  searchFoodAdvanced(options: SearchFoodOptions, userId: number): Observable<any> {
     let params = new HttpParams();
   
     Object.entries(options).forEach(([key, value]) => {
@@ -29,9 +29,13 @@ export class RecipeService {
         params = params.append(key, value);
       }
     });
-  
+    
+    // Append userId as a query parameter
+    params = params.append('userId', userId.toString());
+
     return this.http.get<any>(`${this.backendUrl}/searchFoodAdvanced`, { params });
   }
+
   
 
   getRandomRecipes(): Observable<any> {

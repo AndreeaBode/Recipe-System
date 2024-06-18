@@ -6,13 +6,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import sd.entities.SearchFoodOptions;
+import sd.entities.User;
 import sd.repositories.RecipeRepository;
+import sd.repositories.UserRepository;
+
+import java.time.LocalDateTime;
 
 @Service
 public class AdvancedRecipeService {
 
     @Autowired
     private RecipeRepository recipeRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     //private final String spoonacularApiKey = "d79ab01d2eff47d081feed07a650ff00";
     private final String spoonacularApiKey = "da3a95ad9e794dc3b5d43cf1f0f8cf60";
@@ -22,13 +29,42 @@ public class AdvancedRecipeService {
     private final String nutritionWidgetUrl = "https://api.spoonacular.com/recipes/{id}/nutritionWidget.json";
 
 
-    public ResponseEntity<String> searchFoodAdvanced(SearchFoodOptions options) {
+    private boolean canPerformSearch(User user) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime oneWeekAgo = now.minusWeeks(1);
+
+        if (user.getLastRequestTime() == null || user.getLastRequestTime().isBefore(oneWeekAgo)) {
+            user.setWeeklyRequestCount(0);
+            user.setLastRequestTime(now);
+        }
+
+        if ("premium".equals(user.getRole()) || "admin".equals(user.getRole())) {
+            user.setLastRequestTime(now);
+            userRepository.save(user);
+            return true;
+        }
+
+        if (user.getWeeklyRequestCount() < 3) {
+            user.setWeeklyRequestCount(user.getWeeklyRequestCount() + 1);
+            user.setLastRequestTime(now);
+            userRepository.save(user);
+            return true;
+        }
+
+        return false;
+    }
+    public ResponseEntity<String> searchFoodAdvanced(SearchFoodOptions options, int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!canPerformSearch(user)) {
+            return ResponseEntity.status(403).body("Search limit exceeded. Please make a payment.");
+        }
         try {
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(searchApiUrl)
                     .queryParam("apiKey", spoonacularApiKey)
                     .queryParam("query", options.getQuery())
-                    .queryParam("number", 20);
-            System.out.println("Diet"+ options.getDiet());
+                    .queryParam("number", 21);
 
             if (options.getDiet() != null && !options.getDiet().isEmpty()) {
                 builder.queryParam("diet", options.getDiet());
@@ -42,7 +78,6 @@ public class AdvancedRecipeService {
             if (options.getExcludeIngredients() != null && !options.getExcludeIngredients().isEmpty()) {
                 builder.queryParam("excludeIngredients", options.getExcludeIngredients());
             }
-
             if (options.getMaxReadyTime() != 0) {
                 builder.queryParam("maxReadyTime", options.getMaxReadyTime());
             }
@@ -68,7 +103,7 @@ public class AdvancedRecipeService {
                 builder.queryParam("minFat", options.getMinFat());
             }
             if (options.getMaxFat() != 0) {
-                builder.queryParam("maxFat()", options.getMaxFat());
+                builder.queryParam("maxFat", options.getMaxFat());
             }
             if (options.getMinCholesterol() != 0) {
                 builder.queryParam("minCholesterol", options.getMinCholesterol());
@@ -83,13 +118,8 @@ public class AdvancedRecipeService {
                 builder.queryParam("maxSugar", options.getMaxSugar());
             }
 
-
-            System.out.println(builder.toUriString());
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
-
-            String responseBody = responseEntity.getBody();
-            System.out.println("Response Body: " + responseBody);
 
             return responseEntity;
         } catch (Exception e) {
@@ -97,7 +127,6 @@ public class AdvancedRecipeService {
             return ResponseEntity.status(500).body("Error processing the request.");
         }
     }
-
 
     public ResponseEntity<String> getRecipeNutrition(int id) {
         try {

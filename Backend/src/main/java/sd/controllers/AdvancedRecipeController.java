@@ -15,11 +15,9 @@ public class AdvancedRecipeController {
     }
 
     @GetMapping("/searchFoodAdvanced")
-    public ResponseEntity<String> searchFoodAdvanced(@ModelAttribute SearchFoodOptions options) {
-        ResponseEntity<String> responseEntity = advancedRecipeService.searchFoodAdvanced(options);
-        String responseBody = responseEntity.getBody();
-        System.out.println(responseBody);
-        return ResponseEntity.ok(responseBody);
+    public ResponseEntity<String> searchFoodAdvanced(@ModelAttribute SearchFoodOptions options, @RequestParam int userId) {
+        ResponseEntity<String> responseEntity = advancedRecipeService.searchFoodAdvanced(options, userId);
+        return ResponseEntity.status(responseEntity.getStatusCode()).body(responseEntity.getBody());
     }
 
     @GetMapping("/recipe/{id}/nutrition")

@@ -21,21 +21,25 @@ export class SearchIngredientsComponent {
   constructor(private recipeService: RecipeService, private router: Router,
     private authService: AuthService, private likeService: LikeService){}
 
-  searchByIngredients(): void {
-    this.recipeService.findRecipesByIngredients(this.ingredients, this.ranking).subscribe(
-      (response: any) => {
-        this.searchResult = response;
-        console.log("Search results:", response);
-        this.recipes = this.searchResult;
-        this.errorMessage = ''; 
-      },
-      (error) => {
-        console.error('Error:', error);
-        this.errorMessage = 'Error fetching recipes. Please try again.'; 
-        this.searchResult = []; 
-      }
-    );
-  }
+    searchByIngredients(): void {
+      // Elimină spațiile inutile și asigură-te că lista de ingrediente este corect formatată
+      const formattedIngredients = this.ingredients.split(',').map(ingredient => ingredient.trim()).join(',');
+    
+      this.recipeService.findRecipesByIngredients(formattedIngredients, this.ranking).subscribe(
+        (response: any) => {
+          this.searchResult = response;
+          console.log("Search results:", response);
+          this.recipes = this.searchResult;
+          this.errorMessage = '';
+        },
+        (error) => {
+          console.error('Error:', error);
+          this.errorMessage = 'Error fetching recipes. Please try again.';
+          this.searchResult = [];
+        }
+      );
+    }
+    
   
   showRecipeDetails(recipeId: number) {
     this.router.navigate(['/recipe-detail', recipeId]);

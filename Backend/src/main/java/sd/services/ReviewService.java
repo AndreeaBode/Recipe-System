@@ -1,5 +1,6 @@
 package sd.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +70,7 @@ public class ReviewService {
             Optional<ExtractedRecipe> extractedRecipeOptional = extractedRecipeRepository.findById(recipeId);
             if (extractedRecipeOptional.isPresent()) {
                 ExtractedRecipe extractedRecipe = extractedRecipeOptional.get();
+                Hibernate.initialize(extractedRecipe.getReviews());
                 reviews = extractedRecipe.getReviews();
             } else {
                 return null;

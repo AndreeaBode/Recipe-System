@@ -18,6 +18,7 @@ import sd.entities.RecipeUnderReview;
 import sd.repositories.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,7 +60,7 @@ public class RecipeService {
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(searchApiUrl)
                     .queryParam("apiKey", spoonacularApiKey)
                     .queryParam("query", query)
-                    .queryParam("number", 20);
+                    .queryParam("number", 21);
 
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
@@ -243,13 +244,18 @@ public class RecipeService {
 
     public ResponseEntity<String> findByIngredients(String ingredients, int ranking) {
         try {
+            // Format ingredientele corect pentru a evita probleme de interpretare
+            String formattedIngredients = Arrays.stream(ingredients.split(","))
+                    .map(String::trim)
+                    .collect(Collectors.joining(","));
+
             UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(ingredientsSearchApiUrl)
                     .queryParam("apiKey", spoonacularApiKey)
-                    .queryParam("ingredients", ingredients)
-                    .queryParam("number", 10)
+                    .queryParam("ingredients", formattedIngredients)
+                    .queryParam("number", 30)
                     .queryParam("limitLicense", true)
                     .queryParam("ranking", ranking)
-                    .queryParam("ignorePantry", false);
+                    .queryParam("ignorePantry", true); // Modificat pentru a ignora articolele tipice din cămară
 
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> responseEntity = restTemplate.getForEntity(builder.toUriString(), String.class);
@@ -263,6 +269,7 @@ public class RecipeService {
             return ResponseEntity.status(500).body("Error processing the request.");
         }
     }
+
 
     public ResponseEntity<String> searchMenuItems(String query) {
         try {

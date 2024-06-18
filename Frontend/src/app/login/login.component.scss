@@ -4,9 +4,9 @@
     align-items: center;
     height: 89vh;
     font-family: 'Open Sans', sans-serif;
-    color: #fff;
+    background-color: rgb(0, 0, 0);
+    height: 91.8vh;
     
-
     .title-text {
         display: flex;
         width: 200%;
@@ -32,7 +32,7 @@
     .form-container {
         background-color: #fff;
         border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         width: 400px;
         justify-content: center;

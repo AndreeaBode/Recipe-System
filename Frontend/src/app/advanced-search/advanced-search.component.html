@@ -2,7 +2,6 @@
   <div class="a">
     <h1>Recipe Component</h1>
 
-
     <label for="searchTerm">Search Term:</label>
     <input type="text" id="searchTerm" [(ngModel)]="searchTerm" placeholder="Enter search term">
 
@@ -63,20 +62,26 @@
       maxCalories: maxCalories, minFat: minFat, maxFat: maxFat, minCholesterol: minCholesterol, maxCholesterol: maxCholesterol, minSugar: minSugar, maxSugar: maxSugar
     })" class="button">Search</button>
 
+  </div>
 
-    <div class="recipe-container">
-      <div *ngFor="let recipe of searchResult" class="recipe-item">
-        <div class="image-container">
-          <h3>{{ recipe.title }}</h3>
-          <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
-            <i class="fas fa-heart"></i>
-          </span>
-          <a (click)="showRecipeDetails(recipe.id)" class="recipe-link">
-            <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
-          </a>
-        </div>
+  <div class="recipe-container">
+    <div *ngFor="let recipe of searchResult" class="recipe-item">
+      <div class="image-container">
+        <h3>{{ recipe.title }}</h3>
+        <span class="heart" [class.full]="recipe.isLoved" (click)="toggleLike(recipe)">
+          <i class="fas fa-heart"></i>
+        </span>
+        <a (click)="showRecipeDetails(recipe.id)" class="recipe-link">
+          <img [src]="recipe.image" alt="{{ recipe.title }}" class="recipe-image">
+        </a>
       </div>
     </div>
-
   </div>
+
+  <div *ngIf="paymentUrl">
+    <p>Click below to proceed with payment:</p>
+    <a class="btn btn-primary" href="{{ paymentUrl }}" target="_blank">Proceed to Payment</a>
+</div>
+
+
 </div>

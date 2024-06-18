@@ -132,8 +132,6 @@ public class UserService {
             System.out.println("Am ajuns");
             return UserBuilder.toUserDTO(user);
         } else {
-            // Utilizatorul cu ID-ul specificat nu a fost găsit în baza de date
-            // Poți arunca o excepție sau gestiona această situație în alt mod, în funcție de cerințele tale
            System.out.println("Utilizatorul cu ID-ul " + id + " nu a fost găsit.");
            return null;
         }

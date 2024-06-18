@@ -3,6 +3,8 @@ package sd.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table(name = "users")
@@ -24,6 +26,17 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @Column(nullable = false)
+    private int weeklyRequestCount;
+
+    @Column(nullable = false)
+    private LocalDateTime lastRequestTime;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private PremiumUser premiumUser;
+    public User() {
+        this.lastRequestTime = LocalDateTime.now(); // Set default value
+    }
     public int getId() {
         return id;
     }
@@ -62,5 +75,13 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getWeeklyRequestCount() {
+        return weeklyRequestCount;
+    }
+
+    public void setWeeklyRequestCount(int weeklyRequestCount) {
+        this.weeklyRequestCount = weeklyRequestCount;
     }
 }

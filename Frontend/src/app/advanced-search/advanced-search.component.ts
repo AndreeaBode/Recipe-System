@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { RecipeService } from '../services/recipe.service';
 import { Router } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { SearchFoodOptions } from '../search-food-options';
 import { AuthService } from '../auth.service';
 import { LikeService } from '../services/like.service';
+import { PaymentService } from '../services/payment.service';
+import { ToastrService } from 'ngx-toastr';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-advanced-search',
@@ -13,7 +16,6 @@ import { LikeService } from '../services/like.service';
 })
 export class AdvancedSearchComponent {
   searchResult: any[] = [];
-  randomRecipes: any;
   searchTerm: string = '';
   diet: string = '';
   intolerances: string = '';
@@ -32,78 +34,86 @@ export class AdvancedSearchComponent {
   maxCholesterol: number = 0;
   minSugar: number = 0;
   maxSugar: number = 0;
+  paymentUrl: string = '';
 
-  constructor(private recipeService: RecipeService, private router: Router,private authService: AuthService,private likeService: LikeService) {}
+
+  constructor(
+    private recipeService: RecipeService, 
+    private toastr: ToastrService, 
+    private router: Router, 
+    private authService: AuthService, 
+    private paymentService: PaymentService, 
+    private likeService: LikeService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   searchFoodAdvanced(options: SearchFoodOptions): void {
-    this.recipeService.searchFoodAdvanced(options).subscribe(
-      (response: any) => {
-        this.searchResult = response.results; 
-        console.log("Search results:", this.searchResult); 
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error:', error);
-      }
+    const userId = this.authService.userId();
+    this.recipeService.searchFoodAdvanced(options, userId).subscribe(
+        (response: any) => {
+            console.log("Response: ", response);
+            this.searchResult = response.results;
+        },
+        (error: HttpErrorResponse) => {
+            console.log("Error: ", error);
+            if (error.status === 403 && error.error === 'Search limit exceeded. Please make a payment.') {
+              this.toastr.error('Search limit exceeded. Please make a payment.');
+                this.promptPayment(userId);
+            } else {
+                console.error('Error:', error);
+                this.toastr.error("An error occurred while searching for recipes.");
+            }
+        }
     );
   }
+
   
+  promptPayment(userId: number): void {
+      this.paymentService.createCheckoutSession(userId).subscribe(
+          (response: any) => {
+              console.log('Payment URL:', response);
+              this.paymentUrl = response;
+              this.cdr.detectChanges(); // Forțează detecția modificărilor
+          },
+          (error: HttpErrorResponse) => {
+              console.error('Payment error:', error);
+          }
+      );
+  }
+  
+
 
   showRecipeDetails(recipeId: number) {
     this.router.navigate(['/advanced-detail', recipeId]);
   }
-  
-
-
 
   toggleLike(recipe: any): void {
-
-    console.log("RR3", recipe);
     const userId = this.authService.userId();
-    if (!userId) {
-     
-      return;
-    }
+    if (!userId) return;
 
-    const recipeId = recipe.id;
-    const name = "spoonacular";
-    console.log(name);
     recipe.isLoved = !recipe.isLoved;
 
-    console.log("ue", userId);
-    console.log("re", recipeId);
-    console.log("ne", name);
-    console.log("Lo", recipe.isLoved);
-    this.likeService.toggleLike(userId, recipeId,recipe.isLoved, name).subscribe(
+    this.likeService.toggleLike(userId, recipe.id, recipe.isLoved, "spoonacular").subscribe(
       response => {
-        console.log('Succes');
-       // window.location.reload();
+        console.log('Success');
       },
-      (error) =>{
-        console.log('Esec', error);
+      (error) => {
+        console.error('Error:', error);
       }
-    )
+    );
   }
 
-
-
   checkIfLiked(recipe: any): void {
-    console.log("Recipe object:", recipe); 
     const userId = this.authService.userId();
-    const recipeId = recipe.id;
-    const name = "spoonacular";
-    console.log("name", name);
+    if (!userId) return;
 
- 
-    console.log("U", userId);
-    console.log("R",  recipe.id);
-    this.recipeService.checkIfLiked(userId, recipeId).subscribe(
+    this.recipeService.checkIfLiked(userId, recipe.id).subscribe(
       response => {
-        recipe.isLoved = response; 
+        recipe.isLoved = response;
       },
       error => {
         console.error('Error checking if liked:', error);
       }
     );
   }
-  
 }

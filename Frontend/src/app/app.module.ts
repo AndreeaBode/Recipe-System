@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 import { ExtractRecipeComponent } from './extract-recipe/extract-recipe.component';
 import { SearchIngredientsComponent } from './search-ingredients/search-ingredients.component';
-import { MenuItemComponent } from './menu-item/menu-item.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { AdvancedDetailComponent } from './advanced-search/advanced-detail/advanced-detail.component';
 import { RecipeDishgenComponent } from './recipe-dishgen/recipe-dishgen.component';import { AddRecipeComponent } from './add-recipe/add-recipe.component';
@@ -34,6 +33,9 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { RecipeUnderReviewComponent } from './recipe-under-review/recipe-under-review.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchWordsComponent } from './search-words/search-words.component';
+import { PaymentComponent } from './payment/payment.component';
+import { loadStripe, Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
+
 
 @NgModule({
   imports: [
@@ -56,6 +58,7 @@ import { SearchWordsComponent } from './search-words/search-words.component';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+   
 
   ],
   declarations: [
@@ -68,7 +71,6 @@ import { SearchWordsComponent } from './search-words/search-words.component';
     RecipeDetailComponent,
     ExtractRecipeComponent,
     SearchIngredientsComponent,
-    MenuItemComponent,
     AdvancedSearchComponent,
     AdvancedDetailComponent,
     RecipeDishgenComponent,
@@ -80,6 +82,7 @@ import { SearchWordsComponent } from './search-words/search-words.component';
     RecipeUnderReviewComponent,
     NavbarComponent,
     SearchWordsComponent,
+    PaymentComponent,
 
   ],
   providers: [

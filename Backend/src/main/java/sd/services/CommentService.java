@@ -1,5 +1,6 @@
 package sd.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,14 +86,14 @@ public class CommentService {
         return null;
     }*/
 
-
+    @Transactional
     public List<Comment> getCommentsByRecipeId(String username, int recipeId, String additionalPath) {
         List<Comment> comments;
         if (additionalPath.equals("dishgen")) {
-            // Fetch comments related to ExtractedRecipe
             Optional<ExtractedRecipe> extractedRecipeOptional = extractedRecipeRepository.findById(recipeId);
             if (extractedRecipeOptional.isPresent()) {
                 ExtractedRecipe extractedRecipe = extractedRecipeOptional.get();
+                Hibernate.initialize(extractedRecipe.getComments());
                 comments = extractedRecipe.getComments();
             } else {
                 return null;
@@ -101,13 +102,15 @@ public class CommentService {
             Optional<AddedRecipe> addedRecipeOptional = addedRecipeRepository.findById(recipeId);
             if (addedRecipeOptional.isPresent()) {
                 AddedRecipe addedRecipe = addedRecipeOptional.get();
+                Hibernate.initialize(addedRecipe.getComments());
                 comments = addedRecipe.getComments();
             } else {
                 return null;
             }
         } else {
-           return null;
+            return null;
         }
         return comments;
     }
+
 }

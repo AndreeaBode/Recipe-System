@@ -7,7 +7,6 @@ import { RecipeComponent } from './recipe/recipe.component';
 import { RecipeDetailComponent } from './recipe/recipe-detail/recipe-detail.component';
 import { ExtractRecipeComponent } from './extract-recipe/extract-recipe.component';
 import { SearchIngredientsComponent } from './search-ingredients/search-ingredients.component';
-import { MenuItemComponent } from './menu-item/menu-item.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 import { AdvancedDetailComponent } from './advanced-search/advanced-detail/advanced-detail.component';
 import { RecipeDishgenComponent } from './recipe-dishgen/recipe-dishgen.component';
@@ -17,6 +16,7 @@ import { DetailsComponent } from './details/details.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { RecipeUnderReviewComponent } from './recipe-under-review/recipe-under-review.component';
 import { SearchWordsComponent } from './search-words/search-words.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home-page', pathMatch: 'full' },
@@ -26,7 +26,6 @@ const routes: Routes = [
   { path: 'recipe-detail/:id', component: RecipeDetailComponent },
   { path: 'extract-recipe', component: ExtractRecipeComponent },
   { path: 'search-ingredients', component: SearchIngredientsComponent },
-  { path: 'menu-items', component: MenuItemComponent },
   { path: 'advanced-search', component: AdvancedSearchComponent },
   { path: 'advanced-detail/:id', component: AdvancedDetailComponent },
   { path: 'dishgen', component: RecipeDishgenComponent },
@@ -35,6 +34,8 @@ const routes: Routes = [
   { path: 'add-recipe-detail', component: AddedRecipeDetailComponent },
   { path: 'recipe-under-review', component: RecipeUnderReviewComponent },
   { path: 'search-words', component: SearchWordsComponent },
+  { path: 'payment', component: PaymentComponent },
+  { path: '**', redirectTo: 'payment' },
   {
     path: 'details/:id/:sourcePage',
     component: DetailsComponent

@@ -4,14 +4,13 @@
   justify-content: space-between;
   padding: 10px;
   height: 40px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 50%), url('https://i.postimg.cc/YqFd6KWs/1.jpg');
-  color: white;
+  background-color: black;
   backdrop-filter: blur(8px);
-  opacity: 0.9;
   -webkit-backdrop-filter: blur(8px); 
-  position: relative; 
+  position: relative;
   z-index: 100; 
-
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  
   .navbar-left {
     display: flex;
     align-items: center;
@@ -61,6 +60,7 @@
       cursor: pointer;
       text-decoration: none;
       color: inherit;
+      color:white;
     }
   }
 
@@ -109,4 +109,7 @@
   .dropdown:hover .dropdown-content {
     display: block;
   }
+
+
 }
+

@@ -1,6 +1,6 @@
 .background{
     padding-top: 60px;
-    background-color:#2c2b2d;
+    background-color:rgb(0, 0, 0);
     height: 100%;
 }
 
@@ -10,12 +10,12 @@ form {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color:#efe3df;
+    background-color:rgb(255, 255, 255);
     font-family: Arial, sans-serif;
     transition: box-shadow 0.3s ease; 
     
     &:hover {
-        box-shadow: 0 0 20px 10px #f5e1da;
+        box-shadow: 0 0 40px 10px #878787;
       }
   
     div {
