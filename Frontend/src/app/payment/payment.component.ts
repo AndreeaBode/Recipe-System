@@ -28,8 +28,9 @@ export class PaymentComponent implements OnInit {
       this.paymentService.createCheckoutSession(userId).subscribe(
         (response: any) => {
           console.log('Payment URL:', response.url);
+          console.log("Response", response);
           this.paymentUrl = response.url;
-          window.location.href = this.paymentUrl;
+          //window.location.href = this.paymentUrl;
         },
         (error: HttpErrorResponse) => {
           console.error('Payment error:', error);

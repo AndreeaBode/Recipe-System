@@ -160,7 +160,7 @@ public class PaymentService {
         SessionCreateParams params = SessionCreateParams.builder()
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
                 .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:4200/success")
+                .setSuccessUrl("http://localhost:4200/home-page")
                 .setCancelUrl("http://localhost:4200/cancel")
                 .addLineItem(SessionCreateParams.LineItem.builder()
                         .setQuantity(1L)
